@@ -420,6 +420,9 @@
                         $('#wangModal').modal('show');
                         return;
                     }
+                } else if(key == "industry" && d[key] == '') {
+                    $('.tipText').text("请选择行业");
+                    $('#wangModal').modal('show');
                 } else if (key == "province" && d[key] == '') {
                     $('.tipText').text("请选择省份");
                     $('#wangModal').modal('show');
@@ -516,6 +519,9 @@
                         $('#wangModal').modal('show');
                         return;
                     }
+                } else if(key == "industry2" && d[key] == '') {
+                    $('.tipText').text("请选择行业");
+                    $('#wangModal').modal('show');
                 } else if (key == "province2" && d[key] == '') {
                     $('.tipText').text("请选择省份");
                     $('#wangModal').modal('show');
@@ -621,9 +627,6 @@
                 $("#fzrName").val('');
                 $("#fzrphone").val('');
                 $('#industry option:selected').val('');
-                $('#province option:selected').val('');
-                $('#city option:selected').val('');
-                $('#area option:selected').val('');
                 $("#addressD").val('');
             }
         });
