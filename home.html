@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>首页</title>
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!--CUSTOM BASIC STYLES-->
+    <link href="assets/css/basic.css" rel="stylesheet" />
+    <!--CUSTOM MAIN STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/jquery.sPage.css" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.js"></script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="header" href="index.html">
+                    <img src="images/LOGO-home.png" alt="logo">
+                    <span>红点点互动管理平台</span>
+                </a>
+            </div>
+
+            <div class="header-right">
+                <span class="users"></span>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <button type="button" class="btn btn-primary" onclick="Logout()">注销</button>
+                </a>
+            </div>
+        </nav>
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse" id="role2" style="display: none;">
+                <ul class="nav" id="main-menu">
+                    <li><a class="active-menu" href="businessData.html" target="iframeContent" onclick="activeMenu(this)">报表数据</a></li>
+                    <li><a href="prizeActivity.html" target="iframeContent" onclick="activeMenu(this)">奖品活动设置</a></li>
+                    <li><a href="publishAd.html" target="iframeContent" onclick="activeMenu(this)">广告发布</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-collapse" id="role3" style="display: none;">
+                <ul class="nav" id="main-menu2">
+                    <li><a class="active-menu" href="agencyData.html" target="iframeContent2" onclick="activeMenu(this)">报表数据</a></li>
+                    <li><a href="businessManage.html" target="iframeContent2" onclick="activeMenu(this)">商家管理</a></li>
+                </ul>
+            </div>
+        </nav>
+        <iframe id="iframeContent" name="iframeContent" frameborder="0" src="businessData.html" scrolling="no" style="display: none;"></iframe>
+        <iframe id="iframeContent2" name="iframeContent2" frameborder="0" src="agencyData.html" scrolling="no" style="display: none;"></iframe>
+    </div>
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+
+    <!-- METISMENU SCRIPTS -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/jquery.sPage.js"></script>
+    <script src="assets/js/commont.js"></script>
+    <script type="text/javascript">
+        var serverIp_ = localStorage.getItem("serverIp");
+        var urlParamInfo = urlParam();
+        var memberId = urlParamInfo.memberId;
+        var token = urlParamInfo.token;
+        var role = urlParamInfo.role;
+        var userName = urlParamInfo.userName;
+        console.log("name:"+userName);
+        $('.users').text(userName);
+
+        if (role == 2) { //商家
+            $('#role2,#iframeContent').show();
+            $('#role3,#iframeContent2').hide();
+        };
+        if (role == 3) { //代理商
+            $('#role2,#iframeContent').hide();
+            $('#role3,#iframeContent2').show();
+        };
+
+        function Logout() {
+            // console.log("退出");
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+
+        function activeMenu(obj) {
+            console.log(obj);
+            $('#main-menu').find('.active-menu').removeClass('active-menu');
+            $('#main-menu2').find('.active-menu').removeClass('active-menu');
+            $(obj).addClass('active-menu');
+        }
+    </script>
+</body>
+
+</html>

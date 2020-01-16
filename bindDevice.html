@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>绑定/添加设备</title>
+  <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+  <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+  <!-- BOOTSTRAP STYLES-->
+  <link href="assets/css/bootstrap.css" rel="stylesheet" />
+  <!-- FONTAWESOME STYLES-->
+  <link href="assets/css/font-awesome.css" rel="stylesheet" />
+  <!--CUSTOM BASIC STYLES-->
+  <link href="assets/css/basic.css" rel="stylesheet" />
+  <!--CUSTOM MAIN STYLES-->
+  <link href="assets/css/custom.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="assets/css/jquery.sPage.css" />
+  <link rel="stylesheet" href="assets/css/index.css" />
+</head>
+
+<body>
+  <!-- /. NAV SIDE  -->
+  <div id="page-wrapper">
+    <div>
+      <span class="back"><img src="images/back.png" width="18">返回</span>
+    </div>
+    <div class="pageTitle">
+      <span>绑定、添加设备</span>
+  </div>
+    <div id="page-inner">
+      <div class="row">
+        <div class="col-md-10">
+          <!-- <span style="font-size: 18px;">绑定、添加设备</span> -->
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalDialog">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <div class="input-group" style="width: 100%;" id="addMachineName">
+                <input type="text" class="form-control" value="海底捞（深圳）商户码10156" readonly="readonly" id="busiName">
+              </div>
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table id="deviceTable" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>屏幕码</th>
+                      <th>设备名称</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="page-inner-tip">暂无数据</span>
+    </div>
+    <!-- /. PAGE INNER  -->
+  </div>
+  <!-- /. PAGE WRAPPER  -->
+
+  <!-- /. myModalDialog -->
+  <div class="modal fade" id="myModalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="exampleModalLabel">新增设备</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" id="addform">
+            <div class="form-group">
+              <label for="recipient-name" class="control-label col-sm-4">屏幕码&nbsp;&nbsp;</label>
+              <div class="col-sm-8">
+                <input type="number" class="form-control" name="screenCode" id="screenCode">
+              </div>
+            </div>
+            <div class="form-group secretWords">
+              <label for="recipient-name" class="control-label col-sm-4">设备名称&nbsp;&nbsp;</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="deviceName" id="deviceName">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="submitDevice()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 警告提示模态框 -->
+  <div class="modal fade bs-example-modal-sm" id="wangModal" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>提示</h3>
+        </div>
+        <div class="modal-body">
+          <p class="tipText">确定要关闭警告框信息？</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-info" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+  <!-- JQUERY SCRIPTS -->
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <!-- BOOTSTRAP SCRIPTS -->
+  <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/jquery.cookie.js"></script>
+  <!-- METISMENU SCRIPTS -->
+  <script src="assets/js/jquery.metisMenu.js"></script>
+  <!-- CUSTOM SCRIPTS -->
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/jquery.sPage.js"></script>
+  <script src="assets/js/commont.js"></script>
+  <script type="text/javascript">
+    var urlParamInfo = urlParam();
+    // var token = $.cookie('token');
+    var token = localStorage.getItem('token');
+    var serverIp_ = localStorage.getItem("serverIp");
+    var name = urlParamInfo.name;
+    var businessId = urlParamInfo.businessId;
+    if (businessId) {
+      $("#busiName").val(name);
+    };
+
+    //获得商家绑定的盒子
+    getBindBoxList();
+
+    function getBindBoxList() {
+      $.ajax({
+        headers: {
+          "token": token
+        },
+        type: "get",
+        url: serverIp_ + "/agency/business/getBindBoxList",
+        data: {
+          "businessId": businessId
+        },
+        contentType: 'application/json;charset=UTF-8',
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          let screens = data.data;
+          if (data.code == 0) {
+            if (screens.length > 0) {
+              $('.page-inner-tip').css('display', 'none');
+              $('#deviceTable tbody').empty();
+              for (let i = 0; i < screens.length; i++) {
+                $('#deviceTable tbody').append(`
+                      <tr>
+                        <td>${screens[i].id}</td>
+                        <td>${screens[i].boxName == null?'--':screens[i].boxName}</td>
+                        <td><button type="button" class="btn btn-primary" onclick="unbindBox(${screens[i].id})">解绑</button></td>
+                      </tr>
+                    `);
+              }
+            } else {
+              console.log("绑定失败");
+            }
+          }
+        }
+      });
+    }
+
+    function unbindBox(screenCode) {
+      $.ajax({
+        headers: {
+          "token": token
+        },
+        type: "get",
+        url: serverIp_ + "/agency/business/unbindBox",
+        data: {
+          "screenCode": screenCode,
+          "businessId": businessId
+        },
+        contentType: 'application/json;charset=UTF-8',
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          if (data.code == 0) {
+            console.log("解绑成功");
+            getBindBoxList();
+          }
+        }
+      });
+    }
+
+    // 模态框居中
+    ModalDialog('myModalDialog');
+    ModalDialog('wangModal');
+
+    //添加模态框
+    $('#myModalDialog').on('show.bs.modal', function () {
+      $('#screenCode').val('');
+      $('#deviceName').val('');
+    });
+
+    //添加设备
+    function submitDevice() {
+      var d = {};
+      var t = $('#addform').serializeArray();
+      $.each(t, function () {
+        d[this.name] = this.value;
+      });
+      console.log(d);
+      for (let key in d) {
+        if (key == "screenCode" && d[key] == '') {
+          $('.tipText').text("请输入屏幕码");
+          $('#wangModal').modal('show');
+          return;
+        }
+        if (key == "deviceName" && d[key] == '') {
+          $('.tipText').text("请输入设备名称");
+          $('#wangModal').modal('show');
+          return;
+        }
+      }
+      $.ajax({
+        headers: {
+          "token": token
+        },
+        type: "post",
+        url: serverIp_ + "/agency/business/bindBox",
+        data: JSON.stringify({
+          businessId: businessId,
+          screenCode: d.screenCode,
+          name: d.deviceName
+        }),
+        contentType: 'application/json;charset=UTF-8',
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          if (data.code == 0) {
+            $('#myModalDialog').modal('hide');
+            getBindBoxList();
+          } else {
+            $('.tipText').text(data.message);
+            $('#wangModal').modal('show');
+          }
+        }
+      });
+    }
+
+    //返回
+    $(".back").click(function () {
+      window.location.href = "businessManage.html";
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>红点点互动管理平台</title>
+
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/formValidation.css" />
+
+</head>
+
+<body style="background-color: #2E363F;color: #fff;">
+    <div class="container">
+        <div class="row text-center " style="padding-top:100px;">
+            <div class="col-md-12">
+                <img src="images/LOGO-login.png"/>
+                <h3>红点点互动视觉管理平台</h3>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+
+                <div class="panel-body">
+                    <form id="loginForm" class="form-horizontal" onsubmit="return false;">
+                        <hr />
+                        <div class="row form-group form-inline">
+                            <label class="col-sm-3 control-label" style="color: #fff">账户</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="phoneNumber" id="phoneNumber"
+                                    placeholder="请输入注册的手机号码">
+                            </div>
+                        </div>
+                        <div class="row form-group form-inline password">
+                            <label class="col-sm-3 control-label" style="color: #fff">密码</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" name="password" id="password"
+                                    placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <div class="form-group" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary" style="width: 80px;">登录</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 警告提示模态框 -->
+    <div class="modal fade bs-example-modal-sm" id="wangModal" aria-hidden="true" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>提示</h3>
+                </div>
+                <div class="modal-body">
+                    <p class="tipText">确定要关闭警告框信息？</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/formValidation.js"></script>
+    <script src="assets/js/framework/bootstrap.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/commont.js"></script>
+    <script type="text/javascript">
+        ModalDialog('wangModal');
+
+        var serverIp_ = localStorage.getItem('serverIp');
+        //表单验证
+        $(document).ready(function () {
+            $('#loginForm').formValidation({
+                message: '该值无效',
+                icon: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    phoneNumber: {
+                        validators: {
+                            notEmpty: {
+                                message: '登录账户不能为空'
+                            },
+                            phone: {
+                                message: '账户为手机号',
+                                country: 'CN'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空'
+                            },
+                        }
+                    }
+                },
+            }).on('success.form.fv', function (e) {
+                // console.log("成功");
+                // window.location.href = "index.html";
+                loginManage();
+            });
+        });
+
+        function loginManage() {
+            var userInfo = new Object();
+            var phoneNumber = $('#phoneNumber').val();
+            var password = $('#password').val();
+            userInfo.phone = phoneNumber;
+            userInfo.password = password;
+            $.ajax({
+                type: "post",
+                url: serverIp_ + "/agency/login",
+                data: JSON.stringify(userInfo),
+                contentType: 'application/json;charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 0) {
+                        //分不同的权限进行登录
+                        console.log(data);
+                        var role = data.data.role;
+                        var memberId = data.data.memberId;
+                        var token = data.data.token;
+                        var userName = data.data.name;
+                        localStorage.setItem('token',token);
+                        localStorage.setItem('agencyId', memberId, {
+                             path: '/',
+                        });
+                        localStorage.setItem('userName',userName);
+                        // $.cookie('token', token);
+                        // $.cookie('agencyId', memberId, {
+                        //     path: '/',
+                        // });
+                        // $.cookie('userName', userName);
+                        window.location.href = "home.html?memberId=" + memberId + "&token=" + token +
+                            "&role=" + role + "&userName=" + userName;
+                    };
+                    if (res.code === -1) {
+                        $('.tipText').text(res.message);
+                        $('#wangModal').modal('show');
+                    }
+                }
+            });
+        }
+
+
+        $('#wangModal').on('hide.bs.modal', function () {
+            window.location.reload();
+        })
+    </script>
+</body>
+
+</html>

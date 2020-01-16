@@ -1,0 +1,412 @@
+
+#iframeContent,#iframeContent2{
+    min-height:880px;
+    width: 100%;
+    padding: 0 0 0 200px;
+}
+@media (max-width:768px) {
+    #iframeContent,#iframeContent2{
+        min-height:600px;
+        width: 100%;
+        padding: 0;
+    }
+}
+
+body{
+    padding: 0;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+a{
+    text-decoration: none;
+    color: #ffffff;
+}
+a:hover{
+    text-decoration: none;
+}
+
+/*navbar*/
+.header{
+    display: table;
+    padding-left: 30px;
+}
+.header img{
+    display: table-cell;
+    vertical-align: middle;
+}
+.header span{
+    font-size: 26px;
+    color: #ffffff;
+    display: table-cell;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+@media screen and (max-width: 768px){
+    .header span{
+        font-size: 18px;
+    }
+}
+/* table */
+.table,.table th{
+    text-align: center;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{
+    vertical-align: middle;
+}
+
+.panel-footer button{
+    margin-right: 10px;
+}
+
+/* footer */
+#footer-sec{
+    background-color: #000;
+    padding: 20px 50px;
+    color: #ffffff;
+    font-size: 12px;
+    text-align: center;
+}
+
+/* 新增素材 */
+.modal-body{
+    padding: 15px 20px;
+}
+.alert-contents{
+    text-align: center;
+}
+.alert-flex-spaceAround{
+    display: flex;
+    justify-content: space-around;
+}
+.alert-modal-sm{
+    margin: 40px 0;
+}
+.alert-content-top{
+    display: flex;
+    justify-content: space-between;
+}
+.alert-right {
+    text-align: center;
+    /* margin-top: 15px; */
+}
+.align-right{
+    text-align: right;
+}
+.align-left{
+    text-align: left;
+}
+.sucaiPath{
+    width: 80%!important;
+}
+
+
+/* 上传图片 */
+.modal-footer{
+    display: flex;
+    justify-content: space-around;
+}
+#prizeform{
+    text-align: center;
+    font-size: 16px;
+}
+#imgPreview {
+    padding: 0px 20px 5px 20px;
+    text-align: center;
+}
+#imgPreview2 {
+    margin-top: 20px;
+}
+#imgPreview2 div{
+    display: inline-block;
+}
+#imgPreview3 {
+    padding: 20px 20px 5px 20px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.uploadTip{
+    margin: 10px 0;
+}
+#prompt3 {
+    width: 145px;
+    height: 125px;
+    text-align: center;
+    position: relative;
+    border: 1px dashed #666;
+    margin: 0 auto;
+}
+#prompt2 {
+    width: 200px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    position: relative;
+    border: 1px dashed #666;
+    margin: 0 auto;
+}
+#imgSpan {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #808080;
+    /* padding: 52px 50px; */
+}
+.filepath {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+#img2,#img3,#img4,#previewImg{
+    height: 100%;
+    width:  100%;
+}
+#img3,#previewImg{
+    display: none;
+}
+
+
+/* 上传霸屏图片 */
+.imgPreview1 {
+    padding: 20px 20px 5px 20px;
+    text-align: center;
+}
+.prompt1 {
+    width: 145px;
+    height: 125px;
+    text-align: center;
+    position: relative;
+    border: 1px dashed #666;
+}
+#imgSpan1,#imgSpan2,#imgSpan3,#imgSpan4 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #808080;
+    /* padding: 52px 50px; */
+}
+.filepath {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+.img2,.img3{
+    height: 100%;
+    width:  100%;
+}
+.img3{
+    display: none;
+}
+
+
+/* uploadFile */
+.upload-file {
+    width: 325px;
+    background: #ffffff;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.upload-file .body {
+    text-align: center;
+    padding: 38px 0;
+    padding-bottom: 30px;
+}
+#drop input{
+    visibility: hidden;
+}
+.upload-file .body i {
+    font-size: 65px;
+    color: lightgray;
+}
+
+.upload-file .body p b,
+.upload-file .body p a {
+    color: #4db6ac;
+}
+
+.pointer-none {
+    margin: 10px 0 0 0;
+}
+
+.upload-file .body.active {
+    border: dashed 2px #4db6ac;
+}
+
+.fileupload{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.operateBtn{
+    margin-top: 20px;
+}
+.upFileSuccess{
+    color: #3CB371;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    padding: 20px;
+}
+
+#videofile{
+    visibility: hidden;
+}
+
+.configTxt,.configTxt2,.previewUrl{
+    max-width: 180px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* 分页 */
+.Spage{
+    text-align: center;
+}
+
+/* 下拉宽的宽度 */
+.classify{
+    width: 179px!important;
+}
+
+/* 授权日期 */
+.authDate-wrap{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.authLabel{flex: 1;margin: 0;}
+.authInput{
+    /* flex: 3; */
+    border: 1px solid #ccc;
+    padding: 2px;
+    border-radius: 4px;
+}
+.authDateBtn{
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+}
+.authDateIcon{
+    border: 0;
+    background-color: transparent;
+}
+
+/* 授权状态 */
+.authColor,.onlineColor,.deadlineColor,.statusColor{
+    color: red;
+}
+
+/* 权限管理 */
+#roleList input,#firstList input,#secondList input{
+    font-size: 14px;
+}
+
+#roleList thead >tr>th,#firstList thead >tr>th,#secondList thead >tr>th,
+#roleList tbody >tr>td,#firstList tbody >tr>td,#secondList tbody >tr>td{
+    border: 0;
+}
+
+/* 进度条 */
+.progress{
+    display: none;
+    width: 325px;
+    margin: 8px;
+    color: #fff;
+}
+
+/* table滚动条 */
+.table-responsive{
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+/* 更改bootstrap原有样式 */
+.btn:hover,
+.btn:focus,
+.form-control:focus {
+     outline: none;
+ }
+ .form-control:focus {
+    border-color: #ccc;
+    box-shadow: none;
+ }
+ textarea{
+     resize: none;
+ }
+ .btn-primary:focus,
+ .btn-primary:active{
+     background-color: #428bca;
+     border-color: #357ebd;
+ }
+ .form-control{
+     width: auto;
+ }
+
+ .sidebar-collapse > .nav > li > a {
+     padding: 15px 35px;
+ }
+
+ .page-inner-tip{
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    font-size: 20px;
+    color: #666;
+ }
+
+ .back{
+     font-size: 15px;
+ }
+
+ .pageTitle{
+     width: 100%;
+     font-size: 18px;
+     font-weight: bolder;
+     background-color: #fff;
+     margin: 10px 20px 10px 0px;
+     padding: 10px;
+ }
+
+ /* 设备数据 */
+ #page-wrapper2 {
+    position: relative;
+    padding: 15px 15px;
+    min-height: 600px;
+    background: #ecf0f4;
+}
+
+#page-inner2 {
+    width: 100%;
+    margin: 10px 20px 10px 0px;
+    background-color: #ecf0f4;
+    padding: 10px;
+    min-height: 800px;
+}
+#page-inner2 a{
+    text-decoration: none;
+    color: #1e90ff;
+}
+
+#page-inner2 .row{
+    margin-top: 20px;
+}
+
+@media (min-width:768px) {
+    #page-wrapper2 {
+        /* margin: 0 0 0 200px; */
+        padding: 15px 30px;
+        min-height: 880px;
+    }
+}

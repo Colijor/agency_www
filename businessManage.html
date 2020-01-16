@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>商家管理</title>
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!--CUSTOM BASIC STYLES-->
+    <link href="assets/css/basic.css" rel="stylesheet" />
+    <!--CUSTOM MAIN STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <!-- <link rel="stylesheet" href="assets/css/pagination.css" /> -->
+    <link rel="stylesheet" href="assets/css/jquery.sPage.css" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+</head>
+
+<body>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper">
+        <div class="pageTitle">
+            <span>商家管理</span>
+        </div>
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="row" style="margin-top: 0;">
+                        <div class="col-md-6 col-md-offset-3">
+                            <select class="form-control" name="Classify1" id="Classify1" onchange="searchMaterial()">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="row" id="addressClassify" style="margin-top: 0;">
+                        <select class="form-control col-md-5 col-md-offset-1" name="Classify2" id="Classify2" onchange="searchMaterial()"></select>
+                        <select class="form-control col-md-5 col-md-offset-1" name="Classify3" id="Classify3" onchange="searchMaterial()"></select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="请输入你要搜索的素材名称或编号" id="searchInput"
+                            onkeydown="if(event.keyCode==13)searchMaterial()">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="searchMaterial()">搜索</button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalDialog"
+                        data-type="addBusiness">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="businessTable" class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>序号</th>
+                                            <th>商家名称</th>
+                                            <th>商家账号</th>
+                                            <th>负责人</th>
+                                            <th>负责人电话</th>
+                                            <th>类型/行业</th>
+                                            <th>地区</th>
+                                            <th>详细地址</th>
+                                            <th>创建时间</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <span class="page-inner-tip">暂无数据</span>
+            <!-- <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="Spage">
+                        <div id="myPage" class="demo"></div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+    <!-- </div> -->
+    <!-- /. WRAPPER  -->
+    <!-- /. myModalDialog -->
+    <div class="modal fade" id="myModalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">新增商家</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="addform">
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">商家名称&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="clientName" id="clientName"
+                                    placeholder="如xx酒吧或xx">
+                            </div>
+                        </div>
+                        <div class="form-group secretWords">
+                            <label for="recipient-name" class="control-label col-sm-4">商家账号&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="phone" id="phone"
+                                    placeholder="11有效手机号码">
+                            </div>
+                        </div>
+                        <div class="form-group secretWords">
+                            <label for="recipient-name" class="control-label col-sm-4">设置密码&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" name="password" id="password"
+                                    placeholder="设置密码">
+                            </div>
+                        </div>
+                        <div class="form-group secretWords">
+                            <label for="recipient-name" class="control-label col-sm-4">确认密码&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="password" class="form-control" name="password2" id="password2"
+                                    placeholder="确认密码">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">负责人&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="fzrName" id="fzrName">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">负责人电话&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="fzrphone" id="fzrphone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">类型/行业&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="industry" id="industry">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">地区&nbsp;&nbsp;</label>
+                            <div class="col-sm-8" id="address">
+                                <select name="province" id="province"></select><!-- 省 -->
+                                <select name="city" id="city"></select><!-- 市 -->
+                                <select name="area" id="area"></select><!-- 区 -->
+                            </div>
+                        </div>
+                        <div class="form-group secretWords">
+                            <label for="recipient-name" class="control-label col-sm-4">详细地址&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="addressD" id="addressD"
+                                    placeholder="如xx路或xx号">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="submitBusiness()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModalDialog2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">编辑商家</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="updateform">
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">商家名称&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="clientName2" id="clientName2"
+                                    placeholder="如xx酒吧或xx">
+                            </div>
+                        </div>
+                        <div class="form-group secretWords">
+                            <label for="recipient-name" class="control-label col-sm-4">商家账号&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="phone2" id="phone2"
+                                    placeholder="11有效手机号码" onblur="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">负责人&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="fzrName2" id="fzrName2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">负责人电话&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="number" class="form-control" name="fzrphone2" id="fzrphone2">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">类型/行业&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="industry2" id="industry2">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label col-sm-4">地区&nbsp;&nbsp;</label>
+                            <div class="col-sm-8" id="address2">
+                                <select name="province2" id="province2"></select><!-- 省 -->
+                                <select name="city2" id="city2"></select><!-- 市 -->
+                                <select name="area2" id="area2"></select><!-- 区 -->
+                            </div>
+                        </div>
+                        <div class="form-group secretWords">
+                            <label for="recipient-name" class="control-label col-sm-4">详细地址&nbsp;&nbsp;</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="addressD2" id="addressD2"
+                                    placeholder="如xx路或xx号">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="submitBusiness2()">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 警告提示模态框 -->
+    <div class="modal fade bs-example-modal-sm" id="wangModal" aria-hidden="true" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>提示</h3>
+                </div>
+                <div class="modal-body">
+                    <p class="tipText">确定要关闭警告框信息？</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/distpicker.data.js"></script>
+    <script src="assets/js/distpicker.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/jquery.sPage.js"></script>
+    <script src="assets/js/commont.js"></script>
+    <script type="text/javascript">
+        // 获取行业下拉项
+        var options = getOptions();
+        $('#Classify1,#industry,#industry2').append(options);
+        // 默认选中地区
+        $('#addressClassify').distpicker();
+
+        // 搜索
+        function searchMaterial(){
+            return;
+        }
+
+        let type = '';
+        let id = '';
+
+        var serverIp_ = localStorage.getItem('serverIp');
+        var token = localStorage.getItem('token');
+        var agencyId = localStorage.getItem('agencyId');
+        // var token = $.cookie('token');
+        // var agencyId = $.cookie('agencyId');
+        var urlParamInfo = urlParam();
+        var configurationId = urlParamInfo.configurationId;
+        getBusiness();
+
+        function getBusiness() {
+            // 获取所有商家
+            $.ajax({
+                headers: {
+                    "token": token
+                },
+                type: "get",
+                url: serverIp_ + "/agency/agencyManager/business/list",
+                data: {
+                    "agencyId": agencyId
+                },
+                contentType: 'application/json;charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 0) {
+                        let infoList = data.data;
+                        if (infoList.length > 0) {
+                            $('.page-inner-tip').css('display', 'none');
+                            $("#businessTable tbody").empty();
+                            for (let i = 0; i < infoList.length; i++) {
+                                $("#businessTable tbody").append(`
+                                <tr>
+                                    <td>${i+1}</td>
+                                    <td>${infoList[i].name}</td>
+                                    <td>${infoList[i].phone}</td>
+							    	<td>${infoList[i].dutyGuy == null?'--':infoList[i].dutyGuy}</td>
+							    	<td>${infoList[i].dutyPhone == null?'--':infoList[i].dutyPhone}</td>
+							    	<td>${infoList[i].occupation == null?'--':infoList[i].occupation}</td>
+							    	<td>${infoList[i].province}/${infoList[i].city}</td>
+							    	<td>${infoList[i].address}</td>
+							    	<td>${infoList[i].createTime}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-warning" data-id="${infoList[i].id}" data-type="updateBusiness" data-toggle="modal" data-target="#myModalDialog2">编辑</button>
+							    		<button type="button" class="btn btn-primary" onclick="gotobindDevice(${infoList[i].id},\'${infoList[i].name}\')">绑定设备</button>
+							    	</td>
+							    </tr>
+            		            `);
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function submitBusiness() {
+            var d = {};
+            var t = $('#addform').serializeArray();
+            $.each(t, function () {
+                d[this.name] = this.value;
+            });
+            console.log(d);
+            for (let key in d) {
+                if (key == "clientName" && d[key] == '') {
+                    $('.tipText').text("请输入奖品名称");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "phone") {
+                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入账号");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("请输入正确的商家账号（即手机号）");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "password") {
+                    var flag = checkInput(/^[\S]{6,12}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入密码");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("密码必须6到12位，且不能出现空格");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "password2") {
+                    var ps1 = $('#password').val();
+                    if (d[key] != ps1) {
+                        $('.tipText').text("密码不一致");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "fzrName" && d[key] == '') {
+                    $('.tipText').text("请输入负责人");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "fzrphone" && d[key] == '') {
+                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入负责人电话");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("请输入正确的手机号");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "province" && d[key] == '') {
+                    $('.tipText').text("请选择省份");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "city" && d[key] == '') {
+                    $('.tipText').text("请选择城市");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "area" && d[key] == '') {
+                    $('.tipText').text("请选择地区");
+                    $('#wangModal').modal('show');
+                    return;
+                }
+            }
+            if (type == "addBusiness") {
+                $.ajax({
+                    headers: {
+                        "token": token
+                    },
+                    type: "post",
+                    url: serverIp_ + "/agency/agencyManager/create/business",
+                    data: JSON.stringify({
+                        "agencyId": agencyId,
+                        "name": d.clientName,
+                        "phone": d.phone,
+                        "password": d.password,
+                        "secondPwd": d.password2,
+                        "dutyGuy": d.fzrName,
+                        "dutyPhone": d.fzrphone,
+                        "occupation": d.industry,
+                        "province": d.province,
+                        "city": d.city,
+                        "area": d.area,
+                        "address": d.addressD
+                    }),
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    success: function (data) {
+                        console.log("商家添加成功")
+                        console.log(data);
+                        if (data.code === 0) {
+                            $('#myModalDialog').modal('hide');
+                            getBusiness();
+                        } else {
+                            $('.tipText').text(data.message);
+                            $('#wangModal').modal('show');
+                        }
+                    }
+                });
+            }
+        }
+
+        function submitBusiness2() {
+            var d = {};
+            var t = $('#updateform').serializeArray();
+            var picUrl = $('#previewImg').attr('src');
+            //console.log(picUrl);
+            t.push({
+                "name": "icon",
+                "value": picUrl
+            });
+            $.each(t, function () {
+                d[this.name] = this.value;
+            });
+            console.log(d);
+            for (let key in d) {
+                if (key == "clientName2" && d[key] == '') {
+                    $('.tipText').text("请输入奖品名称");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "phone2") {
+                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入账号");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("请输入正确的商家账号（即手机号）");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "fzrName2" && d[key] == '') {
+                    $('.tipText').text("请输入负责人");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "fzrphone2" && d[key] == '') {
+                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入负责人电话");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("请输入正确的手机号");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "province2" && d[key] == '') {
+                    $('.tipText').text("请选择省份");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "city2" && d[key] == '') {
+                    $('.tipText').text("请选择城市");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "area2" && d[key] == '') {
+                    $('.tipText').text("请选择地区");
+                    $('#wangModal').modal('show');
+                    return;
+                }
+            }
+            if (type == "updateBusiness") {
+                $.ajax({
+                    headers: {
+                        "token": token
+                    },
+                    type: "post",
+                    url: serverIp_ + "/agency/business/post/edit",
+                    data: JSON.stringify({
+                        "agencyId": agencyId,
+                        "id": id,
+                        "name": d.clientName2,
+                        "phone": d.phone2,
+                        "role": 2,
+                        "dutyGuy": d.fzrName2,
+                        "dutyPhone": d.fzrphone2,
+                        "occupation": d.industry2,
+                        "province": d.province2,
+                        "city": d.city2,
+                        "area": d.area2,
+                        "address": d.addressD2
+                    }),
+                    contentType: 'application/json;charset=UTF-8',
+                    dataType: "json",
+                    success: function (data) {
+                        console.log("商家保存成功")
+                        console.log(data);
+                        if (data.code === 0) {
+                            $('#myModalDialog2').modal('hide');
+                            getBusiness();
+                        } else {
+                            $('.tipText').text(data.message);
+                            $('#wangModal').modal('show');
+                        }
+                    }
+                });
+            }
+        }
+
+        // 绑定设备
+        function gotobindDevice(businessId, name) {
+            window.location.href = "bindDevice.html?businessId=" + businessId + "&name=" + name;
+        }
+
+        // 查询单个商家
+        function findBusiness(id) {
+            $.ajax({
+                headers: {
+                    "token": token
+                },
+                type: "get",
+                url: serverIp_ + "/agency/business/get/information",
+                data: {
+                    "businessId": id
+                },
+                contentType: 'application/json;charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.code == 0) {
+                        let cilentInfo = data.data;
+                        $("#clientName2").val(cilentInfo.name);
+                        $("#phone2").val(cilentInfo.phone);
+                        $("#fzrName").val(cilentInfo.dutyGuy);
+                        $("#fzrphone").val(cilentInfo.dutyPhone);
+                        $('#industry2 option:selected').val(cilentInfo.occupation);
+                        $("#province2").val(cilentInfo.province);
+                        $("#province2").trigger("change"); //distpicker插件改变三级城市联动关键
+                        $("#city2").val(cilentInfo.city);
+                        $("#city2").trigger("change");
+                        $("#area2").val(cilentInfo.area);
+                        $("#area2").trigger("change");
+                        $("#addressD2").val(cilentInfo.address);
+                    }
+                }
+            });
+        }
+        // 添加商家模态框
+        $('#myModalDialog').on('show.bs.modal', function (e) {
+            $('#address').distpicker(); //地址选择
+            var zIndex = Number($('.modal').css('z-index'));
+            $('#myModalDialog').css("zIndex", zIndex + 1);
+            type = $(e.relatedTarget).data("type");
+            console.log('添加商家');
+            if (type == "addBusiness") {
+                $("#clientName").val('');
+                $("#phone").val('');
+                $("#password").val('');
+                $("#password2").val('');
+                $("#fzrName").val('');
+                $("#fzrphone").val('');
+                $('#industry option:selected').val('');
+                $('#province option:selected').val('');
+                $('#city option:selected').val('');
+                $('#area option:selected').val('');
+                $("#addressD").val('');
+            }
+        });
+
+        // 编辑商家模态框
+        $('#myModalDialog2').on('show.bs.modal', function (e) {
+            $('#address2').distpicker(); //地址选择
+            var zIndex = Number($('.modal').css('z-index'));
+            $('#myModalDialog2').css("zIndex", zIndex + 1);
+            type = $(e.relatedTarget).data("type");
+            if (type == "updateBusiness") {
+                id = $(e.relatedTarget).data("id");
+                findBusiness(id);
+            }
+        });
+
+
+        // 模态框居中
+        ModalDialog('myModalDialog');
+        ModalDialog('myModalDialog2');
+        ModalDialog('wangModal');
+
+        // 提示模态框
+        $('#wangModal').on('shown.bs.modal', function (e) {
+            var zIndex = Number($('.modal').css('z-index'));
+            $('#wangModal').css("zIndex", zIndex + 1);
+        });
+
+        // 选择发券模式
+        function changefqMode(dome) {
+            let fqMode = $('#' + dome + ' option:selected').val();
+            console.log("发券模式：" + fqMode);
+            if (fqMode > 0) {
+                $('.secretWords').css("display", "flex");
+            } else {
+                $('.secretWords').css("display", "none");
+            }
+        }
+    </script>
+</body>
+
+</html>

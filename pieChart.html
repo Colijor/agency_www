@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>绘制圆环数据图</title>
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+</head>
+<body>
+    <!-- <div>
+        <div></div>
+        <canvas></canvas>
+        <div>
+            <ul>
+                <li><span></span><span></span><span></span></li>
+                <li><span></span><span></span><span></span></li>
+                <li><span></span><span></span><span></span></li>
+            </ul>
+        </div>
+    </div> -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/commont.js"></script>
+    <script src="assets/js/pieChart.js"></script>
+    <script type="text/javascript">
+        var data1 = [
+            {"id":"item0","text":"这是第一行","num":10,"color":"#1e90ff","isdraw":1},
+            {"id":"item1","text":"这是第二行","num":20,"color":"#36cbcb","isdraw":1},
+            {"id":"item2","text":"这是第三行","num":30,"color":"#2fc25b","isdraw":1},
+            // {"id":"item3","text":"这是第四行","num":40,"color":"#ffd700","isdraw":1},
+            // {"id":"item4","text":"这是第五行","num":50,"color":"#ff3030","isdraw":1},
+            // {"id":"item5","text":"这是第六行","num":60,"color":"#8a2be2","isdraw":1},
+        ];
+        var apie = new pieChart('这里是标题',data1,150,40);
+        apie.add_data();
+        apie.draw();
+    </script>
+</body>
+</html>

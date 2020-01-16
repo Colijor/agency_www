@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>报表数据</title>
+  <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+  <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+  <!--[if lt IE 9]>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+  <![endif]-->
+  <!-- BOOTSTRAP STYLES-->
+  <link href="assets/css/bootstrap.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/index.css" />
+</head>
+
+<body>
+  <!-- /. NAV SIDE  -->
+  <div id="page-wrapper2">
+    <div class="pageTitle">
+      <span>报表数据</span>
+    </div>
+    <div id="page-inner2">
+      <div id="canvas1" class="row text-center">
+        <!-- <div class="col-md-12">
+          <h3>该功能暂无</h3>
+        </div> -->
+      </div>
+      <div id="canvas2" class="row text-center"></div>
+    </div>
+    <!-- /. PAGE INNER  -->
+  </div>
+  <!-- /. PAGE WRAPPER  -->
+  <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+  <!-- JQUERY SCRIPTS -->
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <!-- BOOTSTRAP SCRIPTS -->
+  <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/commont.js"></script>
+  <script src="assets/js/pieChart.js"></script>
+  <script type="text/javascript">
+    var serverIp_ = localStorage.getItem('serverIp');
+    var token = localStorage.getItem('token');
+    var agencyId = localStorage.getItem('agencyId');
+
+    var data1 = [{
+        "id": "item0",
+        "text": "在线",
+        "num": 0,
+        "color": "#1e90ff",
+        "isdraw": 1
+      },
+      {
+        "id": "item1",
+        "text": "离线",
+        "num": 0,
+        "color": "#ccc",
+        "isdraw": 1
+      }
+    ];
+
+    var data2 = [{
+        "id": "item0",
+        "text": "发券总计",
+        "num": 0,
+        "color": "#1e90ff",
+        "isdraw": 1
+      },
+      {
+        "id": "item1",
+        "text": "核销数",
+        "num": 0,
+        "color": "#36cbcb",
+        "isdraw": 1
+      }
+    ];
+
+    var data3 = [{
+        "id": "item0",
+        "text": "总吸粉人数",
+        "num": 0,
+        "color": "#1e90ff",
+        "isdraw": 1
+      },
+      {
+        "id": "item1",
+        "text": "今天",
+        "num": 0,
+        "color": "#36cbcb",
+        "isdraw": 1
+      }
+    ];
+
+    $.ajax({
+      headers: {
+        "token": token
+      },
+      type: "get",
+      url: serverIp_ + "/agency/statistic/agency",
+      data: {
+        'agencyId': agencyId
+      },
+      contentType: 'application/json;charset=UTF-8',
+      dataType: "json",
+      success: function (res) {
+        console.log("获取经销商报表数据");
+        console.log(res);
+        if (res.code == 0) {
+          data1[0].num = res.data.onlineDevices;
+          data1[1].num = res.data.devices - res.data.onlineDevices;
+
+          data2[0].num = res.data.sendCoupons;
+          data2[1].num = res.data.exchageCoupons;
+
+          data3[0].num = res.data.fans;
+          data3[1].num = res.data.todayFans == null ? 0 : res.data.todayFans;
+
+          console.log(data1);
+          console.log(data2);
+          console.log(data3);
+          var apie1 = new pieChart('left', '查看详情', data1, 120, 40, 'canvas1', 'circle1', '#');
+          apie1.add_data();
+          apie1.draw();
+
+          var apie2 = new pieChart('right', '查看详情', data2, 120, 40, 'canvas1', 'circle2', '#');
+          apie2.add_data();
+          apie2.draw();
+
+          var apie3 = new pieChart('left', '查看详情', data3, 120, 40, 'canvas2', 'circle3', '#');
+          apie3.add_data();
+          apie3.draw();
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
