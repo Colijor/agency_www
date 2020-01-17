@@ -57,22 +57,12 @@
             </div>
         </nav>
         <nav class="navbar-default navbar-side" role="navigation">
-            <div class="sidebar-collapse" id="role2" style="display: none;">
+            <div class="sidebar-collapse">
                 <ul class="nav" id="main-menu">
-                    <li><a class="active-menu" href="businessData.html" target="iframeContent" onclick="activeMenu(this)">报表数据</a></li>
-                    <li><a href="prizeActivity.html" target="iframeContent" onclick="activeMenu(this)">奖品活动设置</a></li>
-                    <li><a href="publishAd.html" target="iframeContent" onclick="activeMenu(this)">广告发布</a></li>
-                </ul>
-            </div>
-            <div class="sidebar-collapse" id="role3" style="display: none;">
-                <ul class="nav" id="main-menu2">
-                    <li><a class="active-menu" href="agencyData.html" target="iframeContent2" onclick="activeMenu(this)">报表数据</a></li>
-                    <li><a href="businessManage.html" target="iframeContent2" onclick="activeMenu(this)">商家管理</a></li>
                 </ul>
             </div>
         </nav>
-        <iframe id="iframeContent" name="iframeContent" frameborder="0" src="businessData.html" scrolling="no" style="display: none;"></iframe>
-        <iframe id="iframeContent2" name="iframeContent2" frameborder="0" src="agencyData.html" scrolling="no" style="display: none;"></iframe>
+        <iframe id="iframeContent" name="iframeContent" frameborder="0" src="reportData.html" scrolling="no"></iframe>
     </div>
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
 
@@ -83,22 +73,25 @@
     <script src="assets/js/jquery.sPage.js"></script>
     <script src="assets/js/commont.js"></script>
     <script type="text/javascript">
-        var serverIp_ = localStorage.getItem("serverIp");
         var urlParamInfo = urlParam();
-        var memberId = urlParamInfo.memberId;
-        var token = urlParamInfo.token;
         var role = urlParamInfo.role;
         var userName = urlParamInfo.userName;
-        console.log("name:"+userName);
+        console.log("name:" + userName);
         $('.users').text(userName);
 
         if (role == 2) { //商家
-            $('#role2,#iframeContent').show();
-            $('#role3,#iframeContent2').hide();
-        };
-        if (role == 3) { //代理商
-            $('#role2,#iframeContent').hide();
-            $('#role3,#iframeContent2').show();
+            $('#main-menu').empty();
+            $('#main-menu').append(`
+                <li><a class="active-menu" href="reportData.html" target="iframeContent" onclick="activeMenu(this)">报表数据</a></li>
+                <li><a href="prizeActivity.html" target="iframeContent" onclick="activeMenu(this)">奖品活动设置</a></li>
+                <li><a href="publishAd.html" target="iframeContent" onclick="activeMenu(this)">广告发布</a></li>
+            `);
+        } else if (role == 3) { //代理商
+            $('#main-menu').empty();
+            $('#main-menu').append(`
+                <li><a class="active-menu" href="reportData.html" target="iframeContent" onclick="activeMenu(this)">报表数据</a></li>
+                <li><a href="businessManage.html" target="iframeContent" onclick="activeMenu(this)">商家管理</a></li>
+            `);
         };
 
         function Logout() {
@@ -110,7 +103,6 @@
         function activeMenu(obj) {
             console.log(obj);
             $('#main-menu').find('.active-menu').removeClass('active-menu');
-            $('#main-menu2').find('.active-menu').removeClass('active-menu');
             $(obj).addClass('active-menu');
         }
     </script>

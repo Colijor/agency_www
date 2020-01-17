@@ -297,7 +297,8 @@
                                 <td>${orders[i].isPromote == 0 ? '否':'是'}</td>
                                 <td>${orders[i].pattern == 0 ? '游戏模式' : orders[i].pattern == 1 ? '免费模式' : '收费模式'}</td>
                                 <td>
-                                    <button type="button" class="btn btn-info" id="Configuration" onclick="gotoConfiguration(${orders[i].id})">配置</button>
+                                    <button type="button" class="btn btn-info" id="Configuration" onclick="gotoConfiguration(${orders[i].id})">配置奖品</button>
+                                    <button type="button" class="btn btn-info" id="Configuration" onclick="gotobindScrennCode(${orders[i].id})">绑定盒子</button>
                                     <button type="button" class="btn btn-info" data-id="${orders[i].id}" data-type="updateActivity" data-toggle="modal" data-target="#myModalDialog2">编辑</button>
                                     <button type="button" class="btn btn-danger" id="dltActivity${orders[i].id}">删除</button>
                                 </td>
@@ -446,6 +447,10 @@
         // 配置奖品
         function gotoConfiguration(id) {
             window.location.href = "prizeManage.html?configurationId=" + id;
+        }
+        // 绑定屏幕码
+        function gotobindScrennCode(id) {
+            window.location.href = "bindScreenCode.html?configurationId=" + id;
         }
 
         // 删除

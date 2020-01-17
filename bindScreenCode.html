@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>绑定设备</title>
+  <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+  <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+  <!-- BOOTSTRAP STYLES-->
+  <link href="assets/css/bootstrap.css" rel="stylesheet" />
+  <!-- FONTAWESOME STYLES-->
+  <link href="assets/css/font-awesome.css" rel="stylesheet" />
+  <!--CUSTOM BASIC STYLES-->
+  <link href="assets/css/basic.css" rel="stylesheet" />
+  <!--CUSTOM MAIN STYLES-->
+  <link href="assets/css/custom.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="assets/css/jquery.sPage.css" />
+  <link rel="stylesheet" href="assets/css/index.css" />
+</head>
+
+<body>
+  <!-- /. NAV SIDE  -->
+  <div id="page-wrapper">
+    <div>
+      <span class="back"><img src="images/back.png" width="18">返回</span>
+    </div>
+    <div class="pageTitle">
+      <span>绑定设备</span>
+    </div>
+    <div id="page-inner">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table id="deviceTable" class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>序号</th>
+                      <th>屏幕码</th>
+                      <th>设备名称</th>
+                      <th>绑定状态</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="page-inner-tip">暂无数据</span>
+    </div>
+    <!-- /. PAGE INNER  -->
+  </div>
+  <!-- /. PAGE WRAPPER  -->
+  <!-- 警告提示模态框 -->
+  <div class="modal fade bs-example-modal-sm" id="wangModal" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>提示</h3>
+        </div>
+        <div class="modal-body">
+          <p class="tipText">确定要关闭警告框信息？</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="bindBox()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+  <!-- JQUERY SCRIPTS -->
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <!-- BOOTSTRAP SCRIPTS -->
+  <script src="assets/js/bootstrap.js"></script>
+  <script src="assets/js/jquery.cookie.js"></script>
+  <!-- METISMENU SCRIPTS -->
+  <script src="assets/js/jquery.metisMenu.js"></script>
+  <!-- CUSTOM SCRIPTS -->
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/jquery.sPage.js"></script>
+  <script src="assets/js/commont.js"></script>
+  <script type="text/javascript">
+    var urlParamInfo = urlParam();
+    var token = localStorage.getItem('token');
+    var serverIp_ = localStorage.getItem("serverIp");
+    var agencyId = localStorage.getItem("agencyId");
+    var configurationId = urlParamInfo.configurationId;
+    // //获得商家绑定的盒子
+    getBindBoxList();
+
+    function getBindBoxList() {
+      $.ajax({
+        headers: {
+          "token": token
+        },
+        type: "get",
+        url: serverIp_ + "/agency/business/get/information",
+        data: {
+          "businessId": agencyId
+        },
+        async: false,
+        contentType: 'application/json;charset=UTF-8',
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          let businessName = data.data.name;
+          $.ajax({
+            headers: {
+              "token": token
+            },
+            type: "get",
+            url: serverIp_ + "/agency/good/bind/list/get",
+            data: {
+              "businessId": agencyId,
+              "configurationId": configurationId
+            },
+            async: false,
+            contentType: 'application/json;charset=UTF-8',
+            dataType: "json",
+            success: function (data) {
+              let screenCodeList = data.data;
+              console.log(screenCodeList);
+              if (screenCodeList.length > 0) {
+                $('.page-inner-tip').css('display', 'none');
+                $("#deviceTable tbody").empty();
+                for (let i = 0; i < screenCodeList.length; i++) {
+                  $("#deviceTable tbody").append(`
+                    <tr>
+                      <th>${i+1}</th>
+                      <th>${screenCodeList[i].screenCode}</th>
+                      <th>${businessName}</th>
+                      <th style="color:${screenCodeList[i].isBind == 1?'green':'red'}">${screenCodeList[i].isBind == 1?'已绑定':'未绑定'}</th>
+                      <th>
+                        <button type="button" class="btn btn-primary" onclick="setBind(${screenCodeList[i].screenCode},${screenCodeList[i].isBind})">${screenCodeList[i].isBind == 1?'解绑':'绑定'}</button>
+                      </th>
+                    </tr>
+                  `);
+                }
+              }
+            }
+          });
+        }
+      });
+    }
+
+    var screenCodes = '';
+    function setBind(screenCode, isBind) {
+      if (isBind == 1) {
+        unbindBox(screenCode);
+      } else if (isBind == 0) { //绑定前查询屏幕码有没有被其他活动绑定，有的话提示是否强制绑定
+        $.ajax({
+          headers: {
+            "token": token
+          },
+          type: "get",
+          url: serverIp_ + "/agency/good/configuration/exists",
+          data: {
+            "screenCode": screenCode
+          },
+          contentType: 'application/json;charset=UTF-8',
+          dataType: "json",
+          success: function (data) {
+            console.log(data.code)
+            if (data.code == 0) {
+              screenCodes = screenCode;
+              bindBox();
+            } else {
+              screenCodes = screenCode;
+              $('.tipText').text("该设备已被其他活动绑定，是否强制绑定！");
+              $('#wangModal').modal('show');
+            }
+          }
+        });
+      }
+    }
+
+    function bindBox() {
+      console.log(screenCodes);
+      $.ajax({
+        headers: {
+          "token": token
+        },
+        type: "get",
+        url: serverIp_ + "/agency/good/bind",
+        data: {
+          "configurationId": configurationId,
+          "screenCode": screenCodes,
+          "isBind": 0
+        },
+        contentType: 'application/json;charset=UTF-8',
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          console.log("绑定盒子成功！")
+          $('#wangModal').modal('hide');
+          getBindBoxList();
+        }
+      });
+    }
+
+    function unbindBox(screenCode) {
+      $.ajax({
+        headers: {
+          "token": token
+        },
+        type: "get",
+        url: serverIp_ + "/agency/good/bind",
+        data: {
+          "configurationId": configurationId,
+          "screenCode": screenCode,
+          "isBind": 1
+        },
+        contentType: 'application/json;charset=UTF-8',
+        dataType: "json",
+        success: function (data) {
+          console.log(data);
+          console.log("解绑成功！");
+          getBindBoxList();
+        }
+      });
+    }
+
+    // 模态框居中
+    ModalDialog('wangModal');
+
+    //返回
+    $(".back").click(function () {
+      window.location.href = "prizeActivity.html";
+    });
+  </script>
+</body>
+
+</html>

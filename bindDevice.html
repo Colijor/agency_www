@@ -108,7 +108,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-          <button type="button" class="btn btn-primary" onclick="submitDevice()">确定</button>
+          <button type="button" class="btn btn-primary" >确定</button>
         </div>
       </div>
     </div>
@@ -132,29 +132,29 @@
     </div>
   </div>
   <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
-  <!-- JQUERY SCRIPTS -->
-  <script src="assets/js/jquery-3.3.1.min.js"></script>
-  <!-- BOOTSTRAP SCRIPTS -->
-  <script src="assets/js/bootstrap.js"></script>
-  <script src="assets/js/jquery.cookie.js"></script>
-  <!-- METISMENU SCRIPTS -->
-  <script src="assets/js/jquery.metisMenu.js"></script>
-  <!-- CUSTOM SCRIPTS -->
-  <script src="assets/js/custom.js"></script>
-  <script src="assets/js/jquery.sPage.js"></script>
-  <script src="assets/js/commont.js"></script>
-  <script type="text/javascript">
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/jquery.sPage.js"></script>
+    <script src="assets/js/commont.js"></script>
+    <script type="text/javascript">
     var urlParamInfo = urlParam();
     // var token = $.cookie('token');
     var token = localStorage.getItem('token');
     var serverIp_ = localStorage.getItem("serverIp");
-    var name = urlParamInfo.name;
+    var userName = urlParamInfo.name;
     var businessId = urlParamInfo.businessId;
-    if (businessId) {
-      $("#busiName").val(name);
+    if (businessId !='') {
+      $("#busiName").val(userName);
     };
 
-    //获得商家绑定的盒子
+    // //获得商家绑定的盒子
     getBindBoxList();
 
     function getBindBoxList() {
@@ -275,7 +275,7 @@
     //返回
     $(".back").click(function () {
       window.location.href = "businessManage.html";
-    })
+    });
   </script>
 </body>
 

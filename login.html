@@ -140,6 +140,7 @@
                              path: '/',
                         });
                         localStorage.setItem('userName',userName);
+                        localStorage.setItem('role',role);
                         // $.cookie('token', token);
                         // $.cookie('agencyId', memberId, {
                         //     path: '/',
@@ -148,8 +149,8 @@
                         window.location.href = "home.html?memberId=" + memberId + "&token=" + token +
                             "&role=" + role + "&userName=" + userName;
                     };
-                    if (res.code === -1) {
-                        $('.tipText').text(res.message);
+                    if (data.code === -1) {
+                        $('.tipText').text(data.message);
                         $('#wangModal').modal('show');
                     }
                 }
