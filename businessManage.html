@@ -38,20 +38,24 @@
         <div id="page-inner">
             <div class="row">
                 <div class="col-md-2">
-                    <div class="row" style="margin-top: 0;">
-                        <div class="col-md-6 col-md-offset-3">
-                            <select class="form-control" name="Classify1" id="Classify1" onchange="searchMaterial()">
-                            </select>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-primary" onclick="javascrtpt:window.location.href='businessAdd.html'">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增
+                    </button>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-10"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    <select class="form-control" name="Classify1" id="Classify1" onchange="searchMaterial()">
+                    </select>
+                </div>
+                <div class="col-md-5">
                     <div class="row" id="addressClassify" style="margin-top: 0;">
                         <select class="form-control col-md-5 col-md-offset-1" name="Classify2" id="Classify2" onchange="searchMaterial()"></select>
                         <select class="form-control col-md-5 col-md-offset-1" name="Classify3" id="Classify3" onchange="searchMaterial()"></select>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5">
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="请输入你要搜索的素材名称或编号" id="searchInput"
                             onkeydown="if(event.keyCode==13)searchMaterial()">
@@ -59,12 +63,6 @@
                             <button class="btn btn-default" type="button" onclick="searchMaterial()">搜索</button>
                         </span>
                     </div>
-                </div>
-                <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalDialog"
-                        data-type="addBusiness">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增
-                    </button>
                 </div>
             </div>
             <div class="row">
@@ -98,20 +96,14 @@
                 </div>
             </div>
             <span class="page-inner-tip">暂无数据</span>
-            <!-- <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="Spage">
-                        <div id="myPage" class="demo"></div>
-                    </div>
-                </div>
-            </div> -->
         </div>
         <!-- /. PAGE INNER  -->
     </div>
     <!-- /. PAGE WRAPPER  -->
     <!-- </div> -->
     <!-- /. WRAPPER  -->
-    <!-- /. myModalDialog -->
+
+    <!-- 修改密码模态框 -->
     <div class="modal fade" id="myModalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
@@ -119,24 +111,10 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">新增商家</h4>
+                    <h4 class="modal-title" id="exampleModalLabel">修改密码</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" id="addform">
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">商家名称&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="clientName" id="clientName"
-                                    placeholder="如xx酒吧或xx">
-                            </div>
-                        </div>
-                        <div class="form-group secretWords">
-                            <label for="recipient-name" class="control-label col-sm-4">商家账号&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" name="phone" id="phone"
-                                    placeholder="11有效手机号码">
-                            </div>
-                        </div>
+                    <form class="form-horizontal" id="updateform">
                         <div class="form-group secretWords">
                             <label for="recipient-name" class="control-label col-sm-4">设置密码&nbsp;&nbsp;</label>
                             <div class="col-sm-8">
@@ -151,114 +129,11 @@
                                     placeholder="确认密码">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">负责人&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="fzrName" id="fzrName">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">负责人电话&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" name="fzrphone" id="fzrphone">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">类型/行业&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" name="industry" id="industry">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">地区&nbsp;&nbsp;</label>
-                            <div class="col-sm-8" id="address">
-                                <select name="province" id="province"></select><!-- 省 -->
-                                <select name="city" id="city"></select><!-- 市 -->
-                                <select name="area" id="area"></select><!-- 区 -->
-                            </div>
-                        </div>
-                        <div class="form-group secretWords">
-                            <label for="recipient-name" class="control-label col-sm-4">详细地址&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="addressD" id="addressD"
-                                    placeholder="如xx路或xx号">
-                            </div>
-                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" onclick="submitBusiness()">确定</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="myModalDialog2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">编辑商家</h4>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" id="updateform">
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">商家名称&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="clientName2" id="clientName2"
-                                    placeholder="如xx酒吧或xx">
-                            </div>
-                        </div>
-                        <div class="form-group secretWords">
-                            <label for="recipient-name" class="control-label col-sm-4">商家账号&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" name="phone2" id="phone2"
-                                    placeholder="11有效手机号码" onblur="">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">负责人&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="fzrName2" id="fzrName2">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">负责人电话&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="number" class="form-control" name="fzrphone2" id="fzrphone2">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">类型/行业&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" name="industry2" id="industry2">
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="recipient-name" class="control-label col-sm-4">地区&nbsp;&nbsp;</label>
-                            <div class="col-sm-8" id="address2">
-                                <select name="province2" id="province2"></select><!-- 省 -->
-                                <select name="city2" id="city2"></select><!-- 市 -->
-                                <select name="area2" id="area2"></select><!-- 区 -->
-                            </div>
-                        </div>
-                        <div class="form-group secretWords">
-                            <label for="recipient-name" class="control-label col-sm-4">详细地址&nbsp;&nbsp;</label>
-                            <div class="col-sm-8">
-                                <input type="text" class="form-control" name="addressD2" id="addressD2"
-                                    placeholder="如xx路或xx号">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="submitBusiness2()">确定</button>
                 </div>
             </div>
         </div>
@@ -307,16 +182,12 @@
             return;
         }
 
-        let type = '';
-        let id = '';
+        // 商家id
+        var businessId = '';
 
         var serverIp_ = localStorage.getItem('serverIp');
         var token = localStorage.getItem('token');
         var agencyId = localStorage.getItem('agencyId');
-        // var token = $.cookie('token');
-        // var agencyId = $.cookie('agencyId');
-        var urlParamInfo = urlParam();
-        var configurationId = urlParamInfo.configurationId;
         getBusiness();
 
         function getBusiness() {
@@ -352,8 +223,9 @@
 							    	<td>${infoList[i].address}</td>
 							    	<td>${infoList[i].createTime}</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning" data-id="${infoList[i].id}" data-type="updateBusiness" data-toggle="modal" data-target="#myModalDialog2">编辑</button>
-							    		<button type="button" class="btn btn-primary" onclick="gotobindDevice(${infoList[i].id},\'${infoList[i].name}\')">绑定设备</button>
+                                        <span title="编辑" class="glyphicon glyphicon glyphicon-edit" onclick="javascrtpt:window.location.href='businessUpdate.html?id=${infoList[i].id}'"></span>
+                                        <span title="邦定设备" class="glyphicon glyphicon glyphicon glyphicon-link" onclick="gotobindDevice(${infoList[i].id},\'${infoList[i].name}\')"></span>
+                                        <span title="修改密码" class="glyphicon glyphicon glyphicon glyphicon-lock" data-id="${infoList[i].id}" data-toggle="modal" data-target="#myModalDialog"></span>
 							    	</td>
 							    </tr>
             		            `);
@@ -366,28 +238,13 @@
 
         function submitBusiness() {
             var d = {};
-            var t = $('#addform').serializeArray();
+            var t = $('#updateform').serializeArray();
             $.each(t, function () {
                 d[this.name] = this.value;
             });
             console.log(d);
             for (let key in d) {
-                if (key == "clientName" && d[key] == '') {
-                    $('.tipText').text("请输入奖品名称");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "phone") {
-                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
-                    if (flag == 0) {
-                        $('.tipText').text("请输入账号");
-                        $('#wangModal').modal('show');
-                        return;
-                    } else if (flag == 1) {
-                        $('.tipText').text("请输入正确的商家账号（即手机号）");
-                        $('#wangModal').modal('show');
-                        return;
-                    }
-                } else if (key == "password") {
+                if (key == "password") {
                     var flag = checkInput(/^[\S]{6,12}$/, d[key]);
                     if (flag == 0) {
                         $('.tipText').text("请输入密码");
@@ -405,173 +262,31 @@
                         $('#wangModal').modal('show');
                         return;
                     }
-                } else if (key == "fzrName" && d[key] == '') {
-                    $('.tipText').text("请输入负责人");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "fzrphone" && d[key] == '') {
-                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
-                    if (flag == 0) {
-                        $('.tipText').text("请输入负责人电话");
-                        $('#wangModal').modal('show');
-                        return;
-                    } else if (flag == 1) {
-                        $('.tipText').text("请输入正确的手机号");
-                        $('#wangModal').modal('show');
-                        return;
-                    }
-                } else if(key == "industry" && d[key] == '') {
-                    $('.tipText').text("请选择行业");
-                    $('#wangModal').modal('show');
-                } else if (key == "province" && d[key] == '') {
-                    $('.tipText').text("请选择省份");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "city" && d[key] == '') {
-                    $('.tipText').text("请选择城市");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "area" && d[key] == '') {
-                    $('.tipText').text("请选择地区");
-                    $('#wangModal').modal('show');
-                    return;
                 }
             }
-            if (type == "addBusiness") {
-                $.ajax({
-                    headers: {
-                        "token": token
-                    },
-                    type: "post",
-                    url: serverIp_ + "/agency/agencyManager/create/business",
-                    data: JSON.stringify({
-                        "agencyId": agencyId,
-                        "name": d.clientName,
-                        "phone": d.phone,
-                        "password": d.password,
-                        "secondPwd": d.password2,
-                        "dutyGuy": d.fzrName,
-                        "dutyPhone": d.fzrphone,
-                        "occupation": d.industry,
-                        "province": d.province,
-                        "city": d.city,
-                        "area": d.area,
-                        "address": d.addressD
-                    }),
-                    contentType: 'application/json;charset=UTF-8',
-                    dataType: "json",
-                    success: function (data) {
-                        console.log("商家添加成功")
-                        console.log(data);
-                        if (data.code === 0) {
-                            $('#myModalDialog').modal('hide');
-                            getBusiness();
-                        } else {
-                            $('.tipText').text(data.message);
-                            $('#wangModal').modal('show');
-                        }
+            $.ajax({
+                headers: {
+                    "token": token
+                },
+                type: "post",
+                url: serverIp_ + "/agency/business/post/edit",
+                data: JSON.stringify({
+                    "id": businessId,
+                    "password": d.password
+                }),
+                contentType: 'application/json;charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.code === 0) {
+                        console.log("修改密码成功");
+                        $('#myModalDialog').modal('hide');
+                    } else {
+                        $('.tipText').text(data.message);
+                        $('#wangModal').modal('show');
                     }
-                });
-            }
-        }
-
-        function submitBusiness2() {
-            var d = {};
-            var t = $('#updateform').serializeArray();
-            var picUrl = $('#previewImg').attr('src');
-            //console.log(picUrl);
-            t.push({
-                "name": "icon",
-                "value": picUrl
-            });
-            $.each(t, function () {
-                d[this.name] = this.value;
-            });
-            console.log(d);
-            for (let key in d) {
-                if (key == "clientName2" && d[key] == '') {
-                    $('.tipText').text("请输入奖品名称");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "phone2") {
-                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
-                    if (flag == 0) {
-                        $('.tipText').text("请输入账号");
-                        $('#wangModal').modal('show');
-                        return;
-                    } else if (flag == 1) {
-                        $('.tipText').text("请输入正确的商家账号（即手机号）");
-                        $('#wangModal').modal('show');
-                        return;
-                    }
-                } else if (key == "fzrName2" && d[key] == '') {
-                    $('.tipText').text("请输入负责人");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "fzrphone2" && d[key] == '') {
-                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
-                    if (flag == 0) {
-                        $('.tipText').text("请输入负责人电话");
-                        $('#wangModal').modal('show');
-                        return;
-                    } else if (flag == 1) {
-                        $('.tipText').text("请输入正确的手机号");
-                        $('#wangModal').modal('show');
-                        return;
-                    }
-                } else if(key == "industry2" && d[key] == '') {
-                    $('.tipText').text("请选择行业");
-                    $('#wangModal').modal('show');
-                } else if (key == "province2" && d[key] == '') {
-                    $('.tipText').text("请选择省份");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "city2" && d[key] == '') {
-                    $('.tipText').text("请选择城市");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "area2" && d[key] == '') {
-                    $('.tipText').text("请选择地区");
-                    $('#wangModal').modal('show');
-                    return;
                 }
-            }
-            if (type == "updateBusiness") {
-                $.ajax({
-                    headers: {
-                        "token": token
-                    },
-                    type: "post",
-                    url: serverIp_ + "/agency/business/post/edit",
-                    data: JSON.stringify({
-                        "agencyId": agencyId,
-                        "id": id,
-                        "name": d.clientName2,
-                        "phone": d.phone2,
-                        "role": 2,
-                        "dutyGuy": d.fzrName2,
-                        "dutyPhone": d.fzrphone2,
-                        "occupation": d.industry2,
-                        "province": d.province2,
-                        "city": d.city2,
-                        "area": d.area2,
-                        "address": d.addressD2
-                    }),
-                    contentType: 'application/json;charset=UTF-8',
-                    dataType: "json",
-                    success: function (data) {
-                        console.log("商家保存成功")
-                        console.log(data);
-                        if (data.code === 0) {
-                            $('#myModalDialog2').modal('hide');
-                            getBusiness();
-                        } else {
-                            $('.tipText').text(data.message);
-                            $('#wangModal').modal('show');
-                        }
-                    }
-                });
-            }
+            });
         }
 
         // 绑定设备
@@ -579,80 +294,22 @@
             window.location.href = "bindDevice.html?businessId=" + businessId + "&name=" + name;
         }
 
-        // 查询单个商家
-        function findBusiness(id) {
-            $.ajax({
-                headers: {
-                    "token": token
-                },
-                type: "get",
-                url: serverIp_ + "/agency/business/get/information",
-                data: {
-                    "businessId": id
-                },
-                contentType: 'application/json;charset=UTF-8',
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    if (data.code == 0) {
-                        let cilentInfo = data.data;
-                        $("#clientName2").val(cilentInfo.name);
-                        $("#phone2").val(cilentInfo.phone);
-                        $("#fzrName").val(cilentInfo.dutyGuy);
-                        $("#fzrphone").val(cilentInfo.dutyPhone);
-                        $('#industry2 option:selected').val(cilentInfo.occupation);
-                        $("#province2").val(cilentInfo.province);
-                        $("#province2").trigger("change"); //distpicker插件改变三级城市联动关键
-                        $("#city2").val(cilentInfo.city);
-                        $("#city2").trigger("change");
-                        $("#area2").val(cilentInfo.area);
-                        $("#area2").trigger("change");
-                        $("#addressD2").val(cilentInfo.address);
-                    }
-                }
-            });
-        }
-        // 添加商家模态框
-        $('#myModalDialog').on('show.bs.modal', function (e) {
-            $('#address').distpicker(); //地址选择
-            var zIndex = Number($('.modal').css('z-index'));
-            $('#myModalDialog').css("zIndex", zIndex + 1);
-            type = $(e.relatedTarget).data("type");
-            console.log('添加商家');
-            if (type == "addBusiness") {
-                $("#clientName").val('');
-                $("#phone").val('');
-                $("#password").val('');
-                $("#password2").val('');
-                $("#fzrName").val('');
-                $("#fzrphone").val('');
-                $('#industry option:selected').val('');
-                $("#addressD").val('');
-            }
-        });
-
-        // 编辑商家模态框
-        $('#myModalDialog2').on('show.bs.modal', function (e) {
-            $('#address2').distpicker(); //地址选择
-            var zIndex = Number($('.modal').css('z-index'));
-            $('#myModalDialog2').css("zIndex", zIndex + 1);
-            type = $(e.relatedTarget).data("type");
-            if (type == "updateBusiness") {
-                id = $(e.relatedTarget).data("id");
-                findBusiness(id);
-            }
-        });
-
-
         // 模态框居中
-        ModalDialog('myModalDialog');
-        ModalDialog('myModalDialog2');
         ModalDialog('wangModal');
 
         // 提示模态框
         $('#wangModal').on('shown.bs.modal', function (e) {
             var zIndex = Number($('.modal').css('z-index'));
             $('#wangModal').css("zIndex", zIndex + 1);
+        });
+
+        // 密码模态框
+        $('#myModalDialog').on('shown.bs.modal', function (e) {
+            var zIndex = Number($('.modal').css('z-index'));
+            businessId = $(e.relatedTarget).data("id");
+            $('#myModalDialog').css("zIndex", zIndex + 1);
+            $('#password').val('');
+            $('#password2').val('');
         });
 
         // 选择发券模式

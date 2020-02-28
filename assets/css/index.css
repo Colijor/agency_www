@@ -59,6 +59,13 @@ a:hover{
     vertical-align: middle;
 }
 
+.table>tbody>tr>td>span{
+    color: #808080;
+}
+.table>tbody>tr>td>span:hover{
+    color: #f73003;
+}
+
 .panel-footer button{
     margin-right: 10px;
 }
@@ -72,7 +79,6 @@ a:hover{
     text-align: center;
 }
 
-/* 新增素材 */
 .modal-body{
     padding: 15px 20px;
 }
@@ -92,7 +98,7 @@ a:hover{
 }
 .alert-right {
     text-align: center;
-    /* margin-top: 15px; */
+    margin-top: 15px;
 }
 .align-right{
     text-align: right;
@@ -106,6 +112,14 @@ a:hover{
 
 
 /* 上传图片 */
+.posterPicture{
+    width: 50%;
+    height: 280px;
+    border: 1px solid #808080;
+    border-radius: 15px;
+    text-align: center;
+    margin-top: 30px;
+}
 .modal-footer{
     display: flex;
     justify-content: space-around;
@@ -173,7 +187,7 @@ a:hover{
 }
 
 
-/* 上传霸屏图片 */
+/* 上传图片 */
 .imgPreview1 {
     padding: 20px 20px 5px 20px;
     text-align: center;
@@ -408,5 +422,37 @@ a:hover{
         /* margin: 0 0 0 200px; */
         padding: 15px 30px;
         min-height: 880px;
+    }
+}
+
+/* 上传多张图片 */
+.upload-pic{ margin: 0;width: 120px;  height: 35px;  line-height: 35px; border-radius: 4px; color: #fff; position: relative; cursor: pointer;
+    font-size: 14px;  background-color: #44b549;  text-align: center;  display: inline-block;
+    vertical-align: middle; margin-left: 8px;  margin-top: 8px;  }
+.upload-pic .up-lab,.upload-pic .up-file{ width: 100%; height: 100%; position: absolute; left: 0; top: 0; z-index: 2; overflow: hidden;}
+.upload-pic .up-lab{ background-color: #44b549; cursor: pointer; }
+.upload-pic .up-file{ z-index: 1;}
+.group-coms-pic{ width: 50%; height: 310px; margin: 30px auto; padding-top: 30px; border: 1px solid #f0f0f0; border-radius: 8px; overflow: hidden; display: flex; justify-content: space-around;flex-wrap: wrap;}
+.group-coms-pic .item{  width: 120px; height: 119px; border:1px solid #f0f0f0; position: relative; margin-right: 10px;margin-bottom: 20px; }
+.group-coms-pic .pic-box{ width:118px; height:117px; overflow: hidden;  position: relative;}
+.group-coms-pic .pic-box .img{ height:117px; position: absolute; left: 50%; top: 50%;
+    transform:translate(-50%,-50%);}
+.group-coms-pic .tk{ padding:0 9px; height: 32px; line-height: 32px; text-align: left;
+    overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis; color: #353535;  font-size: 14px;}
+.group-coms-pic .item .del{ width:20px; height: 20px; line-height: 20px; text-align: center; border-radius: 50%; color: #fff;
+    background-color: #ff6982; cursor: pointer; font-style: normal; position: absolute; right: -10px; top: -10px; }
+
+/* 图表区域 */
+.canvasCss{
+    width: 45%;
+    background: #ffffff;
+    margin-top: 30px;
+}
+@media (max-width:767px) {
+    .group-coms-pic{
+        width: 100%;
+    }
+    .canvasCss{
+        width: 100%;
     }
 }

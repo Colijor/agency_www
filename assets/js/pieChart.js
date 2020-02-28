@@ -26,7 +26,8 @@ function pieChart(float, title, data, radius, width, canvasId, circleId, pageSrc
         var width = 2 * radius; //区域宽度即为直径的长度，画布区域(canvas)的宽高等于直径，下方每一个li的宽度也等于直径。
         var row = document.getElementById(canvasId);
         var col = document.createElement('div');
-        col.setAttribute('style', 'float:'+float+';width: 45%;background: #ffffff;');
+        col.setAttribute('class','canvasCss');
+        col.setAttribute('style', 'float:'+float);
         /***div 'chart'，为整个页面的父div。***/
         // var chart = document.createElement('div');
         // chart.style.width = width+'px';
@@ -107,7 +108,7 @@ function pieChart(float, title, data, radius, width, canvasId, circleId, pageSrc
                 var a_color = data[i].color;
                 // var end = start + 2 * PI * pros / 100 * num / sum;
                 var end = sum == 0 || num == 0? start + 2 * PI * pros / 100 : start + 2 * PI * pros / 100 * num / sum;
-                console.log(end);
+                // console.log(end);
                 ctx.beginPath();
                 ctx.moveTo(radius, radius);
                 ctx.arc(radius, radius, radius, start, end, false);

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>添加商户</title>
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+    <!-- BOOTSTRAP STYLES-->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+    <link href="assets/css/font-awesome.css" rel="stylesheet" />
+    <!--CUSTOM BASIC STYLES-->
+    <link href="assets/css/basic.css" rel="stylesheet" />
+    <!--CUSTOM MAIN STYLES-->
+    <link href="assets/css/custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/reset.css" />
+    <link rel="stylesheet" href="assets/css/index.css" />
+</head>
+
+<body>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper">
+        <div>
+            <span class="back"><img src="images/back.png" width="18">返回</span>
+        </div>
+        <div class="pageTitle">
+            <span>商家管理/添加商家</span>
+        </div>
+        <div id="page-inner">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="panel panel-default" style="border: none;box-shadow: none;">
+                        <div class="panel-body">
+                            <form class="form-horizontal" id="addform">
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label col-sm-4">商家名称&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="clientName" id="clientName"
+                                            placeholder="如xx酒吧或xx">
+                                    </div>
+                                </div>
+                                <div class="form-group secretWords">
+                                    <label for="recipient-name" class="control-label col-sm-4">商家账号&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" name="phone" id="phone"
+                                            placeholder="11有效手机号码">
+                                    </div>
+                                </div>
+                                <div class="form-group secretWords">
+                                    <label for="recipient-name" class="control-label col-sm-4">设置密码&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" class="form-control" name="password" id="password"
+                                            placeholder="设置密码">
+                                    </div>
+                                </div>
+                                <div class="form-group secretWords">
+                                    <label for="recipient-name" class="control-label col-sm-4">确认密码&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" class="form-control" name="password2" id="password2"
+                                            placeholder="确认密码">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label col-sm-4">商家固定电话&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" name="fixedPhone" id="fixedPhone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label col-sm-4">负责人&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="fzrName" id="fzrName">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label col-sm-4">负责人电话&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" class="form-control" name="fzrphone" id="fzrphone">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label col-sm-4">类型/行业&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <select class="form-control" name="industry" id="industry">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label col-sm-4">地区&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8" id="address">
+                                        <select name="province" id="province"></select><!-- 省 -->
+                                        <select name="city" id="city"></select><!-- 市 -->
+                                        <select name="area" id="area"></select><!-- 区 -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label col-sm-4">详细地址&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" name="addressD" id="addressD"
+                                            placeholder="如xx路或xx号">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label col-sm-4">商家介绍&nbsp;&nbsp;</label>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control" id="introduce" name="introduce" rows="3" cols="40" maxlength="100"></textarea>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="alert-right">
+                                <div class="upload-pic">
+                                    <label class="up-lab" for="add-pic-btn">上传海报</label>
+                                    <input type="file" accept="image/*" multiple class="up-file" id="add-pic-btn">
+                                </div>
+                                <div class="group-coms-pic" id="groupTu">
+                                </div>
+                                <div class="upload-pic" id="showSave" style="display: none;">
+                                    <label class="up-lab" onclick="uplaodFile()">确定上传</label>
+                                </div>
+                            </div>
+                            <div class="alert-right">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" onclick="submitBusiness()">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+    <!-- </div> -->
+    <!-- /. WRAPPER  -->
+
+    <!-- 警告提示模态框 -->
+    <div class="modal fade bs-example-modal-sm" id="wangModal" aria-hidden="true" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>提示</h3>
+                </div>
+                <div class="modal-body">
+                    <p class="tipText">确定要关闭警告框信息？</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+    <!-- JQUERY SCRIPTS -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="assets/js/jquery.metisMenu.js"></script>
+    <!-- 省市区 SCRIPTS -->
+    <script src="assets/js/distpicker.data.js"></script>
+    <script src="assets/js/distpicker.js"></script>
+    <!-- 公共 SCRIPTS-->
+    <script src="assets/js/commont.js"></script>
+    <script type="text/javascript">
+        // 初始化
+        function init(){
+            $('#address').distpicker(); //地址选择
+            $("#clientName").val('');
+            $("#phone").val('');
+            $("#password").val('');
+            $("#password2").val('');
+            $("#fzrName").val('');
+            $("#fzrphone").val('');
+            $('#industry option:selected').val('');
+            $("#addressD").val('');
+        }
+        init();
+        // 获取行业下拉项
+        var options = getOptions();
+        $('#industry').append(options);
+        // 默认选中地区
+        $('#addressClassify').distpicker();
+
+        // 所有上传海报url字符串
+        var posterUrl = '';
+
+        var serverIp_ = localStorage.getItem('serverIp');
+        var token = localStorage.getItem('token');
+        var agencyId = localStorage.getItem('agencyId');
+
+        function submitBusiness() {
+            var d = {};
+            var t = $('#addform').serializeArray();
+            $.each(t, function () {
+                d[this.name] = this.value;
+            });
+            console.log(d);
+            for (let key in d) {
+                if (key == "clientName" && d[key] == '') {
+                    $('.tipText').text("请输入奖品名称");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "phone") {
+                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入账号");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("请输入正确的商家账号（即手机号）");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "password") {
+                    var flag = checkInput(/^[\S]{6,12}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入密码");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("密码必须6到12位，且不能出现空格");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "password2") {
+                    var ps1 = $('#password').val();
+                    if (d[key] != ps1) {
+                        $('.tipText').text("密码不一致");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "fixedPhone" && d[key] == '') {
+                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入商家固定电话");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("请输入正确的手机号");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if (key == "fzrName" && d[key] == '') {
+                    $('.tipText').text("请输入负责人");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "fzrphone" && d[key] == '') {
+                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
+                    if (flag == 0) {
+                        $('.tipText').text("请输入负责人电话");
+                        $('#wangModal').modal('show');
+                        return;
+                    } else if (flag == 1) {
+                        $('.tipText').text("请输入正确的手机号");
+                        $('#wangModal').modal('show');
+                        return;
+                    }
+                } else if(key == "industry" && d[key] == '') {
+                    $('.tipText').text("请选择行业");
+                    $('#wangModal').modal('show');
+                } else if (key == "province" && d[key] == '') {
+                    $('.tipText').text("请选择省份");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "city" && d[key] == '') {
+                    $('.tipText').text("请选择城市");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "area" && d[key] == '') {
+                    $('.tipText').text("请选择地区");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "addressD" && d[key] == '') {
+                    $('.tipText').text("请输入详细地址");
+                    $('#wangModal').modal('show');
+                    return;
+                } else if (key == "introduce" && d[key] == '') {
+                    $('.tipText').text("请输入商家介绍");
+                    $('#wangModal').modal('show');
+                    return;
+                }
+            }
+            console.log("pictureUrl: "+posterUrl);
+            $.ajax({
+                headers: {
+                    "token": token
+                },
+                type: "post",
+                url: serverIp_ + "/agency/agencyManager/create/business",
+                data: JSON.stringify({
+                    "agencyId": agencyId,
+                    "name": d.clientName,
+                    "phone": d.phone,
+                    "password": d.password,
+                    "secondPwd": d.password2,
+                    "fixedPhone": d.fixedPhone,
+                    "dutyGuy": d.fzrName,
+                    "dutyPhone": d.fzrphone,
+                    "occupation": d.industry,
+                    "province": d.province,
+                    "city": d.city,
+                    "area": d.area,
+                    "address": d.addressD,
+                    "introduce": d.introduce,
+                    "picture": posterUrl
+                }),
+                contentType: 'application/json;charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.code === 0) {
+                        console.log("商家添加成功");
+                        window.location.href = "businessManage.html";
+                    } else {
+                        $('.tipText').text(data.message);
+                        $('#wangModal').modal('show');
+                    }
+                }
+            });
+        }
+
+        // 模态框居中
+        ModalDialog('wangModal');
+
+        // 提示模态框
+        $('#wangModal').on('shown.bs.modal', function (e) {
+            var zIndex = Number($('.modal').css('z-index'));
+            $('#wangModal').css("zIndex", zIndex + 1);
+        });
+
+        // 选择发券模式
+        function changefqMode(dome) {
+            let fqMode = $('#' + dome + ' option:selected').val();
+            console.log("发券模式：" + fqMode);
+            if (fqMode > 0) {
+                $('.secretWords').css("display", "flex");
+            } else {
+                $('.secretWords').css("display", "none");
+            }
+        }
+
+        //上传多个文件方法
+        //input file已增加multiple属性，按住ctrl可选择多图
+        document.getElementById("add-pic-btn").addEventListener("change",function(){
+            var obj = this,
+                length = obj.files.length,
+                _html = '';
+            console.log(obj.files);
+            if(length > 5){
+                $('.tipText').text("最多上传5张海报");
+                $('#wangModal').modal('show');
+            } else if(length > 0){
+                $("#groupTu").empty();
+                posterUrl = '';
+                for(var i=0; i<length; i++) {
+                    // 上传图片
+                    uploadFile(obj.files[i]);
+                }
+                posterUrl = posterUrl.substring(0,posterUrl.length-1);
+                console.log("posterUrl: "+posterUrl);
+            }
+        })
+
+        //上传海报到服务器
+        function uploadFile(f){
+            let imgSize = f.size;
+            if (imgSize > 1024 * 1024 * 10) {
+                $('.tipText').text("上传图片不能超过10M");
+                $('#wangModal').modal('show');
+                return;
+            } else {
+                let formdata = new FormData();
+                console.log(f);
+                if (f != "") {
+                    formdata.append('file', f);
+                }
+                $.ajax({
+                    headers: {
+                        "token": token
+                    },
+                    type: "post",
+                    url: serverIp_ + "/agency/file/upload",
+                    async: false,//设置成同步
+                    data: formdata,
+                    dataType: "text",
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (data) {
+                        console.log(data);
+                        console.log("上传奖品成功");
+                        // 拼接所有海报url
+                        posterUrl += data+',';
+                        $("#groupTu").append(`
+                            <div class="item">
+                                <div class="pic-box">
+                                    <img src="${data}" alt="poster" class="img">
+                                </div>
+                            </div>
+                        `);
+                    },
+                    error: function () {
+                        console.log("失败");
+                    }
+                });
+            }
+        }
+
+        //返回
+        $(".back").click(function () {
+            window.location.href = "businessManage.html";
+        })
+    </script>
+</body>
+
+</html>
