@@ -235,7 +235,7 @@
                         $("#groupTu").empty();
                         var picLisst = [];
                         var picUrl = data.data.picture;
-                        picLisst = picUrl? [] : picUrl.split(',');
+                        picLisst = picUrl? picUrl.split(',') : [];
                         console.log('picList: '+picLisst);
                         for(var i=0; i<picLisst.length; i++){
                             $("#groupTu").append(`
