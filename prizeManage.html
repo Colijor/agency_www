@@ -43,8 +43,7 @@
                 <div class="col-md-10">
                 </div>
                 <div class="col-md-2">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalDialog"
-                        data-type="addPrize">
+                    <button type="button" class="btn btn-primary" onclick="goAddprize()">
                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 新增
                     </button>
                 </div>
@@ -91,192 +90,6 @@
     <!-- /. PAGE WRAPPER  -->
     <!-- </div> -->
     <!-- /. WRAPPER  -->
-    <!-- /. myModalDialog -->
-    <div class="modal fade" id="myModalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">新增奖品</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="alert-left">
-                        <form class="form-horizontal" id="addform">
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品名称&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="prizeName" id="prizeName">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">中奖概率&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" name="probability" id="probability"
-                                        onblur="checkNumb(1,'probability');"
-                                        onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                                        onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品价值&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" name="price" id="price"
-                                        onblur="checkNumb(2,'price')"
-                                        onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                                        onafterpaste="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品数量&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="amount" id="amount">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">发券模式&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" name="fqMode" id="fqMode"
-                                        onchange="changefqMode('fqMode')">
-                                        <option value=0 selected>商家优惠券</option>
-                                        <option value=1>app下载</option>
-                                        <option value=2>淘宝优惠券</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group secretWords" style="display: none;">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品链接&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="prizeLink" id="prizeLink"
-                                        placeholder="奖品链接复制粘贴到这里">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品说明&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <textarea class="form-control" id="description" name="description"
-                                        placeholder="用于中奖后的描述" rows="3" cols="40" maxlength="100"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="alert-right">
-                        <form id="prizeform" enctype="multipart/form-data">
-                            <div id="imgPreview">
-                                <div id="prompt3">
-                                    <div id="imgSpan">
-                                        <img src="" id="img3" />
-                                        <img src="images/upload.jpg" class="img2" />
-                                    </div>
-                                    <input type="file" id="file" class="filepath" onchange="uploadPrize(this)"
-                                        accept="image/jpg,image/jpeg,image/png,image/PNG">
-                                </div>
-                            </div>
-                            <div><span>点击上传预览图片</span></div>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="submitPrize()">确定</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="myModalDialog2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-        aria-hidden="true" data-backdrop="static" data-keyboard="false">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">编辑奖品</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="alert-left">
-                        <form class="form-horizontal" id="updateform">
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品名称&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="prizeName2" id="prizeName2">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">中奖概率&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" name="probability2" id="probability2"
-                                        onblur="checkNumb(1,'probability');"
-                                        onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
-                                        onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^0-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品价值&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="number" class="form-control" name="price2" id="price2"
-                                        onblur="checkNumb(2,'price')"
-                                        onkeyup="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''"
-                                        onafterpaste="this.value= this.value.match(/\d+(\.\d{0,2})?/) ? this.value.match(/\d+(\.\d{0,2})?/)[0] : ''">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品数量&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="amount2" id="amount2">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">发券模式&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <select class="form-control" name="fqMode2" id="fqMode2"
-                                        onchange="changefqMode('fqMode2')">
-                                        <option value=0 selected>商家优惠券</option>
-                                        <option value=1>app下载</option>
-                                        <option value=2>淘宝优惠券</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group secretWords">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品链接&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="prizeLink2" id="prizeLink2"
-                                        placeholder="奖品链接复制粘贴到这里">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipient-name" class="control-label col-sm-4">奖品说明&nbsp;&nbsp;</label>
-                                <div class="col-sm-8">
-                                    <textarea class="form-control" id="description2" name="description2"
-                                        placeholder="用于中奖后的描述" rows="3" cols="40" maxlength="100"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="alert-right">
-                        <form id="prizeform" enctype="multipart/form-data">
-                            <div id="imgPreview">
-                                <div id="prompt3">
-                                    <div id="imgSpan">
-                                        <img src="" id="previewImg" />
-                                        <img src="images/upload.jpg" class="img2" />
-                                    </div>
-                                    <input type="file" id="file2" class="filepath" onchange="uploadPrize2(this)"
-                                        accept="image/jpg,image/jpeg,image/png,image/PNG">
-                                </div>
-                            </div>
-                            <div><span>点击上传预览图片</span></div>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" onclick="submitPrize2()">确定</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- 警告提示模态框 -->
     <div class="modal fade bs-example-modal-sm" id="wangModal" aria-hidden="true" data-backdrop="static"
@@ -318,6 +131,7 @@
         // var agencyId = $.cookie('agencyId');
         var urlParamInfo = urlParam();
         var configurationId = urlParamInfo.configurationId;
+        console.log("agencyId: "+agencyId+'\t'+"configurationId: "+configurationId);
         getPrize();
 
         function getPrize() {
@@ -333,6 +147,7 @@
                 dataType: "json",
                 success: function (data) {
                     console.log("奖品列表查询");
+                    console.log(data.data);
                     if (data.code == 0) {
                         let orders = data.data;
                         if (orders.length > 0) {
@@ -351,7 +166,7 @@
                                 <td>${orders[i].status}</td>
                                 <td>${orders[i].type == 0?'商家优惠券':orders[i].type == 1?'app下载':'淘宝优惠券'}</td>
                                 <td>
-                                    <button type="button" class="btn btn-info" data-id="${orders[i].id}" data-type="updatePrize" data-toggle="modal" data-target="#myModalDialog2">编辑</button>
+                                    <button type="button" class="btn btn-info" onclick="goUpdatePrize(${orders[i].id})">编辑</button>
                                     <button type="button" class="btn btn-danger" id="dltPrize${orders[i].id}">删除</button>
                                 </td>
                             </tr>`);
@@ -362,252 +177,15 @@
             });
         }
 
-        /**
-         * 添加奖品，先单独上传奖品图片
-         * 再添加奖品
-         */
-        function uploadPrize() {
-            let f = document.getElementById('file').files[0];
-            // console.log(f);
-            let imgSize = f.size;
-            if (imgSize > 1024 * 1024 * 10) {
-                $('.tipText').text("上传图片不能超过10M");
-                $('#wangModal').modal('show');
-                return;
-            } else {
-                let formdata = new FormData();
-                if (f != "") {
-                    formdata.append('icon', f);
-                }
-                $.ajax({
-                    headers: {
-                        "token": token
-                    },
-                    type: "post",
-                    url: serverIp_ + "/agency/good/upload",
-                    data: formdata,
-                    dataType: "json",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        if (data.code === 0) {
-                            console.log("上传奖品成功");
-                            document.getElementById('img3').src = data.data;
-                            $("#imgSpan .img2").css("display", "none");
-                            $("#img3").css("display", "block");
-                        } else {
-                            $('.tipText').text(data.message);
-                            $('#wangModal').modal('show');
-                        }
-                    },
-                    error: function () {
-                        $('#errorTip').text("上传失败！");
-                    }
-                });
-            }
+        // 跳转到添加奖品页面
+        function goAddprize() {
+            window.location.href='prizeAdd.html?configurationId='+configurationId;
+        }
+        // 跳转到编辑奖品页面
+        function goUpdatePrize(id){
+            window.location.href='prizeUpdate.html?id='+id+'&configurationId='+configurationId;
         }
 
-        function uploadPrize2() {
-            let f = document.getElementById('file2').files[0];
-            // console.log(f);
-            let imgSize = f.size;
-            if (imgSize > 1024 * 1024 * 10) {
-                $('.tipText').text("上传图片不能超过10M");
-                $('#wangModal').modal('show');
-                return;
-            } else {
-                let formdata = new FormData();
-                if (f != "") {
-                    formdata.append('icon', f);
-                }
-                $.ajax({
-                    headers: {
-                        "token": token
-                    },
-                    type: "post",
-                    url: serverIp_ + "/agency/good/upload",
-                    data: formdata,
-                    dataType: "json",
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    success: function (data) {
-                        if (data.code === 0) {
-                            console.log("上传奖品成功");
-                            document.getElementById('previewImg').src = data.data;
-                            $("#imgSpan .img2").css("display", "none");
-                            $('#previewImg').css("dispalay", "block");
-                        } else {
-                            $('.tipText').text(data.message);
-                            $('#wangModal').modal('show');
-                        }
-                    },
-                    error: function () {
-                        $('#errorTip').text("上传失败！");
-                    }
-                });
-            }
-        }
-
-        function submitPrize() {
-            var d = {};
-            var t = $('#addform').serializeArray();
-            var picUrl = $('#img3').attr('src');
-            //console.log(picUrl);
-            t.push({
-                "name": "icon",
-                "value": picUrl
-            });
-            $.each(t, function () {
-                d[this.name] = this.value;
-            });
-            console.log(d);
-            for (let key in d) {
-                if (key == "icon" && d[key] == '') {
-                    $('.tipText').text("请上传奖品图片");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "prizeName" && d[key] == '') {
-                    $('.tipText').text("请输入奖品名称");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "probability" && d[key] == '') {
-                    $('.tipText').text("请输入奖品中奖概率");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "price" && d[key] == '') {
-                    $('.tipText').text("请输入奖品价值");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "amount" && d[key] == '') {
-                    $('.tipText').text("请输入奖品数量");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "fqMode" && d[key] > 0) {
-                    var prizeLink = $('#prizeLink').val();
-                    if (prizeLink == '') {
-                        $('.tipText').text("奖品链接不能为空");
-                        $('#wangModal').modal('show');
-                        return;
-                    }
-                }
-            }
-            if (type == "addPrize") {
-                $.ajax({
-                    headers: {
-                        "token": token
-                    },
-                    type: "post",
-                    url: serverIp_ + "/agency/good/add",
-                    data: JSON.stringify({
-                        "businessId": agencyId,
-                        "configurationId": configurationId,
-                        "name": d.prizeName,
-                        "probability": d.probability,
-                        "price": d.price,
-                        "status": d.amount,
-                        "type": d.fqMode,
-                        "secretWords": d.prizeLink,
-                        "icon": d.icon,
-                        "description": d.description
-                    }),
-                    contentType: 'application/json;charset=UTF-8',
-                    dataType: "json",
-                    success: function (data) {
-                        console.log("奖品保存成功")
-                        console.log(data);
-                        if (data.code === 0) {
-                            $('#myModalDialog').modal('hide');
-                            getPrize();
-                        } else {
-                            $('.tipText').text(data.message);
-                            $('#wangModal').modal('show');
-                        }
-                    }
-                });
-            }
-        }
-
-        function submitPrize2() {
-            var d = {};
-            var t = $('#updateform').serializeArray();
-            var picUrl = $('#previewImg').attr('src');
-            //console.log(picUrl);
-            t.push({
-                "name": "icon",
-                "value": picUrl
-            });
-            $.each(t, function () {
-                d[this.name] = this.value;
-            });
-            console.log(d);
-            for (let key in d) {
-                if (key == "icon" && d[key] == '') {
-                    $('.tipText').text("请上传奖品图片");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "prizeName" && d[key] == '') {
-                    $('.tipText').text("请输入奖品名称");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "probability" && d[key] == '') {
-                    $('.tipText').text("请输入奖品中奖概率");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "price" && d[key] == '') {
-                    $('.tipText').text("请输入奖品价值");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "amount" && d[key] == '') {
-                    $('.tipText').text("请输入奖品数量");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "fqMode" && d[key] > 0) {
-                    var prizeLink = $('#prizeLink').val();
-                    if (prizeLink == '') {
-                        $('.tipText').text("奖品链接不能为空");
-                        $('#wangModal').modal('show');
-                        return;
-                    }
-                }
-            }
-            if (type == "updatePrize") {
-                $.ajax({
-                    headers: {
-                        "token": token
-                    },
-                    type: "post",
-                    url: serverIp_ + "/agency/good/update",
-                    data: JSON.stringify({
-                        "businessId": agencyId,
-                        "configurationId": configurationId,
-                        "id": id,
-                        "name": d.prizeName2,
-                        "probability": d.probability2,
-                        "price": d.price2,
-                        "status": d.amount2,
-                        "type": d.fqMode2,
-                        "secretWords": d.prizeLink2,
-                        "icon": d.icon,
-                        "description": d.description2
-                    }),
-                    contentType: 'application/json;charset=UTF-8',
-                    dataType: "json",
-                    success: function (data) {
-                        console.log("奖品修改成功")
-                        console.log(data);
-                        if (data.code === 0) {
-                            $('#myModalDialog2').modal('hide');
-                            getPrize();
-                        } else {
-                            $('.tipText').text(data.message);
-                            $('#wangModal').modal('show');
-                        }
-                    }
-                });
-            }
-        }
         // 删除奖品
         $('#prizeTable tbody').on('click', 'button', function (e) {
             var str = e.target.id;
@@ -630,75 +208,8 @@
                 })
             }
         })
-
-        // 查询单个奖品
-        function findPrize(id) {
-            $.ajax({
-                headers: {
-                    "token": token
-                },
-                type: "get",
-                url: serverIp_ + "/agency/good/get/" + id,
-                data: '',
-                dataType: "json",
-                contentType: 'application/json;charset=UTF-8',
-                success: function (data) {
-                    console.log("获取单个奖品配置信息成功");
-                    console.log(data.data);
-                    $('#prizeName2').val(data.data.name);
-                    $('#probability2').val(data.data.probability); //中奖概率
-                    $('#price2').val(data.data.price); //奖品价值
-                    $('#amount2').val(data.data.status); //奖品数量
-                    $('#fqMode2').val(data.data.type); //发券模式
-                    if (data.data.type > 0) {
-                        $('.secretWords').css("display", "flex");
-                        $('#prizeLink2').val(data.data.secretWords);
-                    } else {
-                        $('.secretWords').css("display", "none");
-                        $('#prizeLink2').val('');
-                    }
-                    $('#description2').val(data.data.description); //奖品说明
-                    $('.img2').css("display", "none");
-                    $('#previewImg')[0].src = data.data.icon;
-                    $('#previewImg').css("display", "block");
-                }
-            });
-        }
-        // 添加模态框
-        $('#myModalDialog').on('show.bs.modal', function (e) {
-            var zIndex = Number($('.modal').css('z-index'));
-            $('#myModalDialog').css("zIndex", zIndex + 1);
-            type = $(e.relatedTarget).data("type");
-            if (type == "addPrize") {
-                $('#prizeName').val('');
-                $('#probability').val('');
-                $('#price').val('');
-                $('#amount').val('');
-                $('#fqMode').val(0);
-                $('.secretWords').css("display", "none");
-                $('#prizeLink').val('');
-                $('#description').val('');
-                $('.img2').css("display", "block");
-                $('#img3')[0].src = '';
-                $('#img3').css("display", "none");
-            }
-        });
-
-        // 编辑奖品模态框
-        $('#myModalDialog2').on('show.bs.modal', function (e) {
-            var zIndex = Number($('.modal').css('z-index'));
-            $('#myModalDialog2').css("zIndex", zIndex + 1);
-            type = $(e.relatedTarget).data("type");
-            if (type == "updatePrize") {
-                id = $(e.relatedTarget).data("id");
-                findPrize(id);
-            }
-        });
-
-
+     
         // 模态框居中
-        ModalDialog('myModalDialog');
-        ModalDialog('myModalDialog2');
         ModalDialog('wangModal');
 
         // 提示模态框

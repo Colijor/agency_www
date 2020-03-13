@@ -25,6 +25,14 @@
     <link href="assets/css/custom.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/reset.css" />
     <link rel="stylesheet" href="assets/css/index.css" />
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=FELGEPyQyUKdGLSnV7vzqSTZCvmKx7ds">
+    </script>
+    <style>
+        /* 地址关键词下拉列表 */
+        .tangram-suggestion-main {
+            z-index: 999;
+        }
+    </style>
 </head>
 
 <body>
@@ -57,7 +65,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="recipient-name" class="control-label col-sm-4">商家固定电话&nbsp;&nbsp;</label>
+                                    <label for="recipient-name"
+                                        class="control-label col-sm-4">商家固定电话&nbsp;&nbsp;</label>
                                     <div class="col-sm-8">
                                         <input type="number" class="form-control" name="fixedPhone" id="fixedPhone">
                                     </div>
@@ -93,13 +102,14 @@
                                     <label for="recipient-name" class="control-label col-sm-4">详细地址&nbsp;&nbsp;</label>
                                     <div class="col-sm-8">
                                         <input type="text" class="form-control" name="addressD" id="addressD"
-                                            placeholder="如xx路或xx号">
+                                            title="x市x区x街x号，越详细导航越准确">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="recipient-name" class="control-label col-sm-4">商家介绍&nbsp;&nbsp;</label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control" id="introduce" name="introduce" rows="3" cols="40" maxlength="100"></textarea>
+                                        <textarea class="form-control" id="introduce" name="introduce" rows="3"
+                                            cols="40" maxlength="100"></textarea>
                                     </div>
                                 </div>
                             </form>
@@ -177,6 +187,11 @@
         // 获取商家海报
         findPoster(urlParamInfo.id);
 
+        //建立一个自动完成的对象
+        var ac = new BMap.Autocomplete({
+            "input": "addressD"
+        });
+
         // 查询单个商家
         function findBusiness(id) {
             $.ajax({
@@ -206,9 +221,10 @@
                         $("#city").trigger("change");
                         $("#area").val(cilentInfo.area);
                         $("#area").trigger("change");
-                        $("#addressD").val(cilentInfo.address);
+                        ac.setInputValue(cilentInfo.address);
+                        //$("#addressD").val(cilentInfo.address);
                         $("#introduce").val(cilentInfo.introduce);
-                    }else{
+                    } else {
                         $('.tipText').text(data.message);
                         $('#wangModal').modal('show');
                     }
@@ -223,7 +239,7 @@
                     "token": token
                 },
                 type: "get",
-                url: serverIp_ + "/agency/business/get/poster/"+id,
+                url: serverIp_ + "/agency/business/get/poster/" + id,
                 data: '',
                 contentType: 'application/json;charset=UTF-8',
                 dataType: "json",
@@ -235,9 +251,9 @@
                         $("#groupTu").empty();
                         var picLisst = [];
                         var picUrl = data.data.picture;
-                        picLisst = picUrl? picUrl.split(',') : [];
-                        console.log('picList: '+picLisst);
-                        for(var i=0; i<picLisst.length; i++){
+                        picLisst = picUrl ? picUrl.split(',') : [];
+                        console.log('picList: ' + picLisst);
+                        for (var i = 0; i < picLisst.length; i++) {
                             $("#groupTu").append(`
                                 <div class="item">
                                     <div class="pic-box">
@@ -246,7 +262,7 @@
                                 </div>
                             `);
                         }
-                    }else{
+                    } else {
                         $('.tipText').text(data.message);
                         $('#wangModal').modal('show');
                     }
@@ -254,7 +270,50 @@
             })
         }
 
+
+        // 百度地图API功能
+        function G(id) {
+            return document.getElementById(id);
+        }
+        var points;
+        var myValue;
+        ac.addEventListener("onconfirm", function (e) { //鼠标点击下拉列表后的事件
+            var _value = e.item.value;
+            myValue = _value.province + _value.city + _value.district + _value.street + _value.business;
+            getBusPoint(myValue, _value.city,0);
+        });
+
+        function getBusPoint(address, city, type) {
+            // 创建地址解析器实例     
+            var myGeo = new BMap.Geocoder();
+            // 获取地址解析经纬度结果    
+            myGeo.getPoint(address, function (point) {
+                if (point) {
+                    console.log(point);
+                    console.log(type);
+                    if(type == 1){
+                        busUpdate(point);
+                    }
+                } else {
+                    $('.tipText').text("您填写的地址不存在!");
+                    $('#wangModal').modal('show');
+                }
+            }, city);
+        }
+
         function submitBusiness() {
+            var city = $('#city').val();
+            var address = $('#addressD').val();
+            console.log("city: "+city+"addr: "+address);
+            if(address){
+                getBusPoint(address,city,1);
+            }else{
+                $('.tipText').text("请输入详细地址");
+                $('#wangModal').modal('show');
+            }
+        }
+
+        function busUpdate(point){
             var d = {};
             var t = $('#updateform').serializeArray();
             $.each(t, function () {
@@ -293,31 +352,33 @@
                     $('#wangModal').modal('show');
                     return;
                 } else if (key == "fzrphone" && d[key] == '') {
-                    var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
-                    if (flag == 0) {
-                        $('.tipText').text("请输入负责人电话");
-                        $('#wangModal').modal('show');
-                        return;
-                    } else if (flag == 1) {
-                        $('.tipText').text("请输入正确的手机号");
-                        $('#wangModal').modal('show');
-                        return;
-                    }
-                } else if(key == "industry" && d[key] == '') {
+                    $('.tipText').text("请输入负责人电话");
+                    $('#wangModal').modal('show');
+                    // var flag = checkInput(/^1[34578]\d{9}$/, d[key]);
+                    // if (flag == 0) {
+                    //     $('.tipText').text("请输入负责人电话");
+                    //     $('#wangModal').modal('show');
+                    //     return;
+                    // } else if (flag == 1) {
+                    //     $('.tipText').text("请输入正确的手机号");
+                    //     $('#wangModal').modal('show');
+                    //     return;
+                    // }
+                } else if (key == "industry" && d[key] == '') {
                     $('.tipText').text("请选择行业");
                     $('#wangModal').modal('show');
-                } else if (key == "province" && d[key] == '') {
-                    $('.tipText').text("请选择省份");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "city" && d[key] == '') {
-                    $('.tipText').text("请选择城市");
-                    $('#wangModal').modal('show');
-                    return;
-                } else if (key == "area" && d[key] == '') {
-                    $('.tipText').text("请选择地区");
-                    $('#wangModal').modal('show');
-                    return;
+                    // } else if (key == "province" && d[key] == '') {
+                    //     $('.tipText').text("请选择省份");
+                    //     $('#wangModal').modal('show');
+                    //     return;
+                    // } else if (key == "city" && d[key] == '') {
+                    //     $('.tipText').text("请选择城市");
+                    //     $('#wangModal').modal('show');
+                    //     return;
+                    // } else if (key == "area" && d[key] == '') {
+                    //     $('.tipText').text("请选择地区");
+                    //     $('#wangModal').modal('show');
+                    //     return;
                 } else if (key == "addressD" && d[key] == '') {
                     $('.tipText').text("请输入详细地址");
                     $('#wangModal').modal('show');
@@ -328,7 +389,6 @@
                     return;
                 }
             }
-            console.log("pictureUrl: "+posterUrl);
             $.ajax({
                 headers: {
                     "token": token
@@ -348,7 +408,9 @@
                     "area": d.area,
                     "address": d.addressD,
                     "introduce": d.introduce,
-                    "picture": posterUrl
+                    "picture": posterUrl,
+                    "longitude": point.lng,
+                    "latitude": point.lat
                 }),
                 contentType: 'application/json;charset=UTF-8',
                 dataType: "json",
@@ -376,28 +438,28 @@
 
         //上传多个文件方法
         //input file已增加multiple属性，按住ctrl可选择多图
-        document.getElementById("add-pic-btn").addEventListener("change",function(){
+        document.getElementById("add-pic-btn").addEventListener("change", function () {
             var obj = this,
                 length = obj.files.length,
                 _html = '';
             console.log(obj.files);
-            if(length > 5){
+            if (length > 5) {
                 $('.tipText').text("最多上传5张海报");
                 $('#wangModal').modal('show');
-            } else if(length > 0){
+            } else if (length > 0) {
                 $("#groupTu").empty();
                 posterUrl = '';
-                for(var i=0; i<length; i++) {
+                for (var i = 0; i < length; i++) {
                     // 上传图片
                     uploadFile(obj.files[i]);
                 }
-                posterUrl = posterUrl.substring(0,posterUrl.length-1);
-                console.log("posterUrl: "+posterUrl);
+                posterUrl = posterUrl.substring(0, posterUrl.length - 1);
+                console.log("posterUrl: " + posterUrl);
             }
         })
 
         //上传海报到服务器
-        function uploadFile(f){
+        function uploadFile(f) {
             let imgSize = f.size;
             if (imgSize > 1024 * 1024 * 10) {
                 $('.tipText').text("上传图片不能超过10M");
@@ -425,7 +487,7 @@
                         console.log(data);
                         console.log("上传奖品成功");
                         // 拼接所有海报url
-                        posterUrl += data+',';
+                        posterUrl += data + ',';
                         $("#groupTu").append(`
                             <div class="item">
                                 <div class="pic-box">

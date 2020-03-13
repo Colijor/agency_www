@@ -115,7 +115,7 @@ function checkNumb(type, id) {
 };
 
 //输入框校验
-function checkInput(key,value) {
+function checkInput(key, value) {
     var reg = key;
     if (value == '') {
         return '0';
@@ -124,7 +124,7 @@ function checkInput(key,value) {
     }
 }
 
-function getOptions(){
+function getOptions() {
     return `<option value="">选择行业</option>
     <option value="高新科技">高新科技</option>
     <option value="互联网">&nbsp;&nbsp;&nbsp;互联网</option>
@@ -238,4 +238,12 @@ function getOptions(){
     <option value="畜牧养殖业">&nbsp;&nbsp;&nbsp;畜牧养殖业</option>
     <option value="林业">&nbsp;&nbsp;&nbsp;林业</option>
     <option value="渔业">&nbsp;&nbsp;&nbsp;渔业</option>`;
+}
+
+// 判断文件后缀是不是图片文件
+function isAssetTypeAnImage(ext) {
+    return [
+        'png', 'jpg', 'jpeg', 'bmp', 'gif', 'webp', 'psd', 'svg', 'tiff'
+    ].
+    indexOf(ext.toLowerCase()) !== -1;
 }

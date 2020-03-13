@@ -428,20 +428,26 @@ a:hover{
 /* 上传多张图片 */
 .upload-pic{ margin: 0;width: 120px;  height: 35px;  line-height: 35px; border-radius: 4px; color: #fff; position: relative; cursor: pointer;
     font-size: 14px;  background-color: #44b549;  text-align: center;  display: inline-block;
-    vertical-align: middle; margin-left: 8px;  margin-top: 8px;  }
+    vertical-align: middle; margin-left: 8px;  margin-top: 30px;  }
 .upload-pic .up-lab,.upload-pic .up-file{ width: 100%; height: 100%; position: absolute; left: 0; top: 0; z-index: 2; overflow: hidden;}
 .upload-pic .up-lab{ background-color: #44b549; cursor: pointer; }
 .upload-pic .up-file{ z-index: 1;}
-.group-coms-pic{ width: 50%; height: 310px; margin: 30px auto; padding-top: 30px; border: 1px solid #f0f0f0; border-radius: 8px; overflow: hidden; display: flex; justify-content: space-around;flex-wrap: wrap;}
-.group-coms-pic .item{  width: 120px; height: 119px; border:1px solid #f0f0f0; position: relative; margin-right: 10px;margin-bottom: 20px; }
-.group-coms-pic .pic-box{ width:118px; height:117px; overflow: hidden;  position: relative;}
-.group-coms-pic .pic-box .img{ height:117px; position: absolute; left: 50%; top: 50%;
+.group-coms-pic{ width: 50%; height: 310px; margin: 10px auto 30px auto; padding-top: 30px; border: 1px solid #f0f0f0; border-radius: 8px; overflow: hidden; display: flex; justify-content: space-around;flex-wrap: wrap;}
+.group-coms-pic .item{  width: 180px; height: 150px; border:1px solid #f0f0f0; position: relative; margin-right: 10px;margin-bottom: 20px; }
+.group-coms-pic .pic-box{ width:178px; height:148px; overflow: hidden;  position: relative;}
+.group-coms-pic .pic-box .img{ height:148px; position: absolute; left: 50%; top: 50%;
     transform:translate(-50%,-50%);}
 .group-coms-pic .tk{ padding:0 9px; height: 32px; line-height: 32px; text-align: left;
     overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis; color: #353535;  font-size: 14px;}
 .group-coms-pic .item .del{ width:20px; height: 20px; line-height: 20px; text-align: center; border-radius: 50%; color: #fff;
     background-color: #ff6982; cursor: pointer; font-style: normal; position: absolute; right: -10px; top: -10px; }
-
+.adgroup-coms-pic {display: grid; grid-template-columns: repeat(auto-fill,180px); grid-row-gap: 20px; grid-column-gap: 20px; width: 100%; height: auto; border: none;}
+.adgroup-coms-pic .item{  width: 100%; height: auto; border:1px solid #f0f0f0; position: relative;}
+.adgroup-coms-pic .pic-box{ width:178px; height:150px; overflow: hidden;  position: relative;}
+.adgroup-coms-pic .pic-box .img{ height:178px; position: absolute; left: 50%; top: 50%;
+    transform:translate(-50%,-50%);}
+.adgroup-coms-pic .tk{ padding:0 9px; height: 32px; line-height: 32px; text-align: center;
+        overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis; color: #353535;  font-size: 14px;}
 /* 图表区域 */
 .canvasCss{
     width: 45%;

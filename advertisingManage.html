@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>广告管理</title>
+  <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+  <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+  <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+  <!-- BOOTSTRAP STYLES-->
+  <link href="assets/css/bootstrap.css" rel="stylesheet" />
+  <!-- FONTAWESOME STYLES-->
+  <link href="assets/css/font-awesome.css" rel="stylesheet" />
+  <!--CUSTOM BASIC STYLES-->
+  <link href="assets/css/basic.css" rel="stylesheet" />
+  <!--CUSTOM MAIN STYLES-->
+  <link href="assets/css/custom.css" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/reset.css" />
+  <link rel="stylesheet" href="assets/css/jquery.sPage.css" />
+  <link rel="stylesheet" href="assets/css/index.css" />
+</head>
+
+<body>
+  <!-- /. NAV SIDE  -->
+  <div id="page-wrapper">
+    <div class="pageTitle">
+      <span>广告管理</span>
+    </div>
+    <div id="page-inner">
+      <div class="row">
+        <div class="col-md-12">
+          <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModalDialog"
+            style="margin-bottom: 30px;">添加广告</button>
+          <div class="panel panel-default">
+            <div class="panel-body" style="height: 680px;overflow: hidden;overflow-y: auto;">
+              <div id="adGroup" class="adgroup-coms-pic">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /. PAGE INNER  -->
+  </div>
+  <!-- /. PAGE WRAPPER  -->
+
+  <!-- 添加广告模态框 -->
+  <div class="modal fade" id="myModalDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="exampleModalLabel">添加广告</h4>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <form id="addform" enctype="multipart/form-data">
+            <div class="form-horizontal">
+              <label for="recipient-name" class="control-label col-sm-4">广告名称&nbsp;&nbsp;</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="adName" id="adName">
+              </div>
+            </div>
+            <div class="upload-pic">
+              <label class="up-lab" for="add-pic-btn">上传广告</label>
+              <input type="file" accept="image/*,video/*" multiple class="up-file" id="add-pic-btn"
+                onchange="checkFile(this)">
+            </div>
+            <div class="group-coms-pic" id="groupTu" style="height: 200px;">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="submitAd()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 警告提示模态框 -->
+  <div class="modal fade bs-example-modal-sm" id="wangModal" aria-hidden="true" data-backdrop="static"
+    data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>提示</h3>
+        </div>
+        <div class="modal-body">
+          <p class="tipText">确定要关闭警告框信息？</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-info" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+  <!-- JQUERY SCRIPTS -->
+  <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <!-- BOOTSTRAP SCRIPTS -->
+  <script src="assets/js/bootstrap.js"></script>
+  <!-- METISMENU SCRIPTS -->
+  <script src="assets/js/jquery.metisMenu.js"></script>
+  <!-- CUSTOM SCRIPTS -->
+  <script src="assets/js/custom.js"></script>
+  <script src="assets/js/jquery.sPage.js"></script>
+  <script src="assets/js/commont.js"></script>
+  <script type="text/javascript">
+    //初始化
+    function init() {
+      $('#adName').val('');
+      $("#groupTu").empty();
+    }
+    init();
+    var adUrl = '';
+    var serverIp_ = localStorage.getItem('serverIp');
+    var token = localStorage.getItem('token');
+    var agencyId = localStorage.getItem('agencyId');
+
+    //查询广告列表
+    allAd();
+
+    function allAd() {
+      $.ajax({
+        headers: {
+          "token": token
+        },
+        type: "get",
+        url: serverIp_ + "/agency/ad/list",
+        data: {
+          agencyId: agencyId
+        },
+        contentType: 'application/json;charset=UTF-8',
+        dataType: "json",
+        success: function (res) {
+          console.log(res);
+          console.log("获取广告列表");
+          if (res.code == 0) {
+            var adData = res.data;
+            $("#adGroup").empty();
+            for (var i = 0; i < adData.length; i++) {
+              var filePath = adData[i].url;
+              //获取最后一个.的位置
+              var index = filePath.lastIndexOf(".");
+              //获取后缀
+              var ext = filePath.substr(index + 1);
+              //判断是否是图片文件
+              if(isAssetTypeAnImage(ext)){
+                $("#adGroup").append(`
+                  <div class="item" style="width: 178px;height: 150px;">
+                      <div class="pic-box" style="width: 100%;height: 100%;">
+                          <img src="${filePath}" alt="adversiting" class="img">
+                      </div>
+                      <div class="tk">${adData[i].name}</div>
+                  </div>
+                `);
+              }else{
+                $("#adGroup").append(`
+                  <div class="item" style="width: 178px;height: 150px;">
+                      <div class="pic-box" style="width: 100%;height: 100%;">
+                        <video src="${filePath}" controls width="178" height="150" style="object-fit: fill;"></video>
+                      </div>
+                      <div class="tk">${adData[i].name}</div>
+                  </div>
+                `);
+              }
+            }
+          } else {
+            $('.tipText').text(data.message);
+            $('#wangModal').modal('show');
+          }
+        }
+      });
+    }
+
+    //上传前检查文件是否符合
+    function checkFile() {
+      let f = document.getElementById('add-pic-btn').files[0];
+      console.log(f);
+      let imgSize = f.size;
+      if (/image\/\w+/.test(f.type)) {
+        if (imgSize > 1024 * 1024 * 10) {
+          $('.tipText').text("上传图片不能超过10M");
+          $('#wangModal').modal('show');
+          return;
+        } else {
+          uploadFile(f, 'image');
+        }
+      } else if (/video\/\w+/.test(f.type)) {
+        if (imgSize > 1024 * 1024 * 100) {
+          $('.tipText').text("上传视频不能超过100M");
+          $('#wangModal').modal('show');
+          return;
+        } else {
+          uploadFile(f, 'video');
+        }
+      } else {
+        $('.tipText').text("请上传图片或视频文件！");
+        $('#wangModal').modal('show');
+      }
+    }
+
+    //上传文件到服务器
+    function uploadFile(f, type) {
+      let formdata = new FormData();
+      if (f != "") {
+        formdata.append('file', f);
+      }
+      $.ajax({
+        headers: {
+          "token": token
+        },
+        type: "post",
+        url: serverIp_ + "/agency/file/upload",
+        async: false, //设置成同步
+        data: formdata,
+        dataType: "text",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+          console.log(data);
+          console.log("上传奖品成功");
+          adUrl = data;
+          if (type == 'image') {
+            $("#groupTu").append(`
+              <div class="item">
+                  <div class="pic-box">
+                      <img src="${data}" alt="adversiting" class="img">
+                  </div>
+              </div>
+            `);
+          } else {
+            $("#groupTu").append(`
+              <div class="item">
+                  <div class="pic-box">
+                    <video src="${data}" controls width="178" height="150" style="object-fit: fill;"></video>
+                  </div>
+              </div>
+            `);
+          }
+        },
+        error: function (error) {
+          console.log(error);
+          $('.tipText').text("上传文件失败！");
+          $('#wangModal').modal('show');
+        }
+      });
+    }
+
+    function submitAd() {
+      var adName = $('#adName').val();
+      if (adName) {
+        $.ajax({
+          headers: {
+            "token": token
+          },
+          type: "post",
+          url: serverIp_ + "/agency/ad/add",
+          data: JSON.stringify({
+            "agencyId": agencyId,
+            "name": adName,
+            "url": adUrl
+          }),
+          contentType: 'application/json;charset=UTF-8',
+          dataType: "json",
+          success: function (data) {
+            console.log(data);
+            if (data.code == 0) {
+              allAd();
+              $('#myModalDialog').modal('hide');
+            } else {
+              $('.tipText').text(data.message);
+              $('#wangModal').modal('show');
+            }
+          }
+        });
+      } else {
+        alert("请输入广告名称！");
+      }
+    }
+
+    // 模态框居中
+    ModalDialog('wangModal');
+    ModalDialog('myModalDialog');
+
+    // 提示模态框
+    $('#wangModal').on('shown.bs.modal', function (e) {
+      var zIndex = Number($('.modal').css('z-index'));
+      $('#wangModal').css("zIndex", zIndex + 1);
+    });
+
+    // 添加模态框
+    $('#myModalDialog').on('shown.bs.modal', function (e) {
+      var zIndex = Number($('.modal').css('z-index'));
+      $('#myModalDialog').css("zIndex", zIndex + 1);
+      $('#adName').val('');
+      $('#groupTu').empty();
+    });
+  </script>
+</body>
+
+</html>
