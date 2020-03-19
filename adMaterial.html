@@ -8,7 +8,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Cache-Control" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>广告管理</title>
+  <title>广告素材</title>
   <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
   <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
   <!--[if lt IE 9]>
@@ -73,7 +73,7 @@
             <div class="upload-pic">
               <label class="up-lab" for="add-pic-btn">上传广告</label>
               <input type="file" accept="image/*,video/*" multiple class="up-file" id="add-pic-btn"
-                onchange="checkFile(this)">
+                onchange="checkFile('')">
             </div>
             <div class="group-coms-pic" id="groupTu" style="height: 200px;">
             </div>
@@ -82,6 +82,41 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
           <button type="button" class="btn btn-primary" onclick="submitAd()">确定</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 编辑广告模态框 -->
+  <div class="modal fade" id="myModalDialog2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2"
+    aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="exampleModalLabel">编辑广告</h4>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          <form id="addform" enctype="multipart/form-data">
+            <div class="form-horizontal">
+              <label for="recipient-name" class="control-label col-sm-4">广告名称&nbsp;&nbsp;</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="adName2" id="adName2">
+              </div>
+            </div>
+            <div class="upload-pic">
+              <label class="up-lab" for="add-pic-btn2">上传广告</label>
+              <input type="file" accept="image/*,video/*" multiple class="up-file" id="add-pic-btn2"
+                onchange="checkFile('2')">
+            </div>
+            <div class="group-coms-pic" id="groupTu2" style="height: 200px;">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" onclick="submitAd2()">确定</button>
         </div>
       </div>
     </div>
@@ -108,6 +143,7 @@
   <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
   <!-- JQUERY SCRIPTS -->
   <script src="assets/js/jquery-3.3.1.min.js"></script>
+  <script src="assets/js/cframe.js"></script>
   <!-- BOOTSTRAP SCRIPTS -->
   <script src="assets/js/bootstrap.js"></script>
   <!-- METISMENU SCRIPTS -->
@@ -117,13 +153,8 @@
   <script src="assets/js/jquery.sPage.js"></script>
   <script src="assets/js/commont.js"></script>
   <script type="text/javascript">
-    //初始化
-    function init() {
-      $('#adName').val('');
-      $("#groupTu").empty();
-    }
-    init();
     var adUrl = '';
+    var adId = '';
     var serverIp_ = localStorage.getItem('serverIp');
     var token = localStorage.getItem('token');
     var agencyId = localStorage.getItem('agencyId');
@@ -150,28 +181,25 @@
             var adData = res.data;
             $("#adGroup").empty();
             for (var i = 0; i < adData.length; i++) {
-              var filePath = adData[i].url;
-              //获取最后一个.的位置
-              var index = filePath.lastIndexOf(".");
-              //获取后缀
-              var ext = filePath.substr(index + 1);
               //判断是否是图片文件
-              if(isAssetTypeAnImage(ext)){
+              if (isAssetTypeAnImage(adData[i].url)) {
                 $("#adGroup").append(`
-                  <div class="item" style="width: 178px;height: 150px;">
-                      <div class="pic-box" style="width: 100%;height: 100%;">
-                          <img src="${filePath}" alt="adversiting" class="img">
+                  <div class="item">
+                      <div class="pic-box"">
+                          <img src="${adData[i].url}" alt="adversiting" class="img">
                       </div>
                       <div class="tk">${adData[i].name}</div>
+                      <div class="ed" data-data=${JSON.stringify(adData[i])} data-toggle="modal" data-target="#myModalDialog2">编辑</div>
                   </div>
                 `);
-              }else{
+              } else {
                 $("#adGroup").append(`
-                  <div class="item" style="width: 178px;height: 150px;">
-                      <div class="pic-box" style="width: 100%;height: 100%;">
-                        <video src="${filePath}" controls width="178" height="150" style="object-fit: fill;"></video>
+                  <div class="item">
+                      <div class="pic-box">
+                        <video src="${adData[i].url}" controls width="178" height="150" style="object-fit: fill;"></video>
                       </div>
                       <div class="tk">${adData[i].name}</div>
+                      <div class="ed" data-data=${JSON.stringify(adData[i])} data-toggle="modal" data-target="#myModalDialog2">编辑</div>
                   </div>
                 `);
               }
@@ -185,8 +213,8 @@
     }
 
     //上传前检查文件是否符合
-    function checkFile() {
-      let f = document.getElementById('add-pic-btn').files[0];
+    function checkFile(idName) {
+      let f = document.getElementById('add-pic-btn' + idName).files[0];
       console.log(f);
       let imgSize = f.size;
       if (/image\/\w+/.test(f.type)) {
@@ -195,7 +223,7 @@
           $('#wangModal').modal('show');
           return;
         } else {
-          uploadFile(f, 'image');
+          uploadFile(f, 'image', idName);
         }
       } else if (/video\/\w+/.test(f.type)) {
         if (imgSize > 1024 * 1024 * 100) {
@@ -203,7 +231,7 @@
           $('#wangModal').modal('show');
           return;
         } else {
-          uploadFile(f, 'video');
+          uploadFile(f, 'video', idName);
         }
       } else {
         $('.tipText').text("请上传图片或视频文件！");
@@ -212,7 +240,7 @@
     }
 
     //上传文件到服务器
-    function uploadFile(f, type) {
+    function uploadFile(f, type, idName) {
       let formdata = new FormData();
       if (f != "") {
         formdata.append('file', f);
@@ -233,8 +261,9 @@
           console.log(data);
           console.log("上传奖品成功");
           adUrl = data;
+          $("#groupTu" + idName).empty();
           if (type == 'image') {
-            $("#groupTu").append(`
+            $("#groupTu" + idName).append(`
               <div class="item">
                   <div class="pic-box">
                       <img src="${data}" alt="adversiting" class="img">
@@ -242,7 +271,7 @@
               </div>
             `);
           } else {
-            $("#groupTu").append(`
+            $("#groupTu" + idName).append(`
               <div class="item">
                   <div class="pic-box">
                     <video src="${data}" controls width="178" height="150" style="object-fit: fill;"></video>
@@ -259,6 +288,7 @@
       });
     }
 
+    //添加广告素材
     function submitAd() {
       var adName = $('#adName').val();
       if (adName) {
@@ -291,9 +321,44 @@
       }
     }
 
+    //修改广告素材
+    function submitAd2() {
+      var adName = $('#adName2').val();
+      if (adName) {
+        $.ajax({
+          headers: {
+            "token": token
+          },
+          type: "post",
+          url: serverIp_ + "/agency/ad/update",
+          data: JSON.stringify({
+            "id": adId,
+            "agencyId": agencyId,
+            "name": adName,
+            "url": adUrl
+          }),
+          contentType: 'application/json;charset=UTF-8',
+          dataType: "json",
+          success: function (data) {
+            console.log(data);
+            if (data.code == 0) {
+              allAd();
+              $('#myModalDialog2').modal('hide');
+            } else {
+              $('.tipText').text(data.message);
+              $('#wangModal').modal('show');
+            }
+          }
+        });
+      } else {
+        alert("请输入广告名称！");
+      }
+    }
+
     // 模态框居中
     ModalDialog('wangModal');
     ModalDialog('myModalDialog');
+    ModalDialog('myModalDialog2');
 
     // 提示模态框
     $('#wangModal').on('shown.bs.modal', function (e) {
@@ -307,6 +372,33 @@
       $('#myModalDialog').css("zIndex", zIndex + 1);
       $('#adName').val('');
       $('#groupTu').empty();
+    });
+
+    // 编辑模态框
+    $('#myModalDialog2').on('shown.bs.modal', function (e) {
+      var zIndex = Number($('.modal').css('z-index'));
+      $('#myModalDialog2').css("zIndex", zIndex + 1);
+      var data = $(e.relatedTarget).data("data");
+      adId = data.id;
+      $('#adName2').val(data.name);
+      $("#groupTu2").empty();
+      if (isAssetTypeAnImage(data.url)) {
+        $("#groupTu2").append(`
+            <div class="item">
+                <div class="pic-box">
+                    <img src="${data.url}" alt="adversiting" class="img">
+                </div>
+            </div>
+        `);
+      } else {
+        $("#groupTu2").append(`
+          <div class="item">
+              <div class="pic-box">
+                <video src="${data.url}" controls width="178" height="150" style="object-fit: fill;"></video>
+              </div>
+          </div>
+        `);
+      }
     });
   </script>
 </body>

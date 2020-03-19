@@ -1,12 +1,12 @@
 
 #iframeContent,#iframeContent2{
-    min-height:880px;
+    /* min-height:880px; */
     width: 100%;
     padding: 0 0 0 200px;
 }
 @media (max-width:768px) {
     #iframeContent,#iframeContent2{
-        min-height:600px;
+        /* min-height:600px; */
         width: 100%;
         padding: 0;
     }
@@ -394,34 +394,35 @@ a:hover{
  }
 
  /* 设备数据 */
- #page-wrapper2 {
+ #page-wrapper {
     position: relative;
     padding: 15px 15px;
-    min-height: 600px;
+    /* min-height: 600px; */
     background: #ecf0f4;
+    overflow: hidden;
+    overflow-y: auto;
 }
 
-#page-inner2 {
+#page-inner {
     width: 100%;
     margin: 10px 20px 10px 0px;
     background-color: #ecf0f4;
     padding: 10px;
-    min-height: 800px;
+    /* min-height: 800px; */
 }
-#page-inner2 a{
+#page-inner a{
     text-decoration: none;
     color: #1e90ff;
 }
 
-#page-inner2 .row{
+#page-inner .row{
     margin-top: 20px;
 }
 
 @media (min-width:768px) {
-    #page-wrapper2 {
-        /* margin: 0 0 0 200px; */
+    #page-wrapper {
         padding: 15px 30px;
-        min-height: 880px;
+        /* min-height: 880px; */
     }
 }
 
@@ -448,6 +449,7 @@ a:hover{
     transform:translate(-50%,-50%);}
 .adgroup-coms-pic .tk{ padding:0 9px; height: 32px; line-height: 32px; text-align: center;
         overflow: hidden;  white-space: nowrap;  text-overflow: ellipsis; color: #353535;  font-size: 14px;}
+.adgroup-coms-pic .ed{ padding:0 9px; height: 32px; line-height: 32px; text-align: center; color: #fff; font-size: 14px; background-color: #44b549;}
 /* 图表区域 */
 .canvasCss{
     width: 45%;

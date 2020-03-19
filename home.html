@@ -31,6 +31,7 @@
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="assets/js/bootstrap.js"></script>
+    <script src="assets/js/cframe.js"></script>
 </head>
 
 <body>
@@ -90,8 +91,14 @@
             $('#main-menu').append(`
                 <li><a class="active-menu" href="reportData.html" target="iframeContent" onclick="activeMenu(this)">报表数据</a></li>
                 <li><a href="businessManage.html" target="iframeContent" onclick="activeMenu(this)">商家管理</a></li>
-                <li><a href="advertisingManage.html" target="iframeContent" onclick="activeMenu(this)">广告管理</a></li>
-            `);
+                <li class="menu1">
+                    <a href="#">广告管理<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a href="adMaterial.html" target="iframeContent" onclick="activeMenu(this)">广告素材</a></li>
+                        <li><a href="adPublish.html" target="iframeContent" onclick="activeMenu(this)">广告发布</a></li>
+                    </ul>
+                </li>`
+            );
         };
 
         function Logout() {
@@ -106,23 +113,16 @@
             $(obj).addClass('active-menu');
         }
 
-        function setIframeHeight(iframe) {
-            if (iframe) {
-                var iframeWin = iframe.contentWindow || iframe.contentDocument.parentWindow;
-                if (iframeWin.document.body) {
-                    iframe.height = iframeWin.document.body.scrollHeight;
-                    console.log(iframeWin.document.body.scrollHeight);
-                }
-            }
-        };
-        $("#iframeContent").each(function (index) {
-            var that = $(this);
-            (function () {
-                setInterval(function () {
-                    setIframeHeight(that[0])
-                }, 200)
-            })(that)
-        });
+        //初始化页面
+        init();
+	    $(window).resize(function(){
+	    	init();
+	    });
+        function init(){
+        	var win_h = $(window).height();
+            $('#wrapper').height(win_h);
+            $('#iframeContent').height(win_h - 64 - 7);
+        }
     </script>
 </body>
 
